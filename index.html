@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#11131B">
 <meta name="description" content="Bintang turns family chores into daily quests. Kids earn stars, level up, collect badges and trade stars for rewards.">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -176,6 +176,10 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 label.f { display: flex; flex-direction: column; gap: 5px; font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
 input[type=text], input[type=number], select, textarea { background: var(--well); border: 2px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; color: var(--ink); font-weight: 600; }
 textarea { resize: vertical; min-height: 84px; font-weight: 500; }
+/* app feel: no zoom, no text-selection callouts on tap */
+html, body { touch-action: manipulation; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overscroll-behavior-y: none; }
+button, nav.dock, .quest, .bigq, .player { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+input, select, textarea { font-size: 16px !important; }
 input:focus, select:focus, textarea:focus { border-color: var(--blue); outline: none; }
 .empty { text-align: center; color: var(--muted); padding: 20px 12px; }
 .empty h3 { color: var(--ink); margin-bottom: 6px; }
@@ -1196,6 +1200,9 @@ document.getElementById("app").addEventListener("keydown", (e) => {
   if (btn) { e.preventDefault(); btn.click(); }
 });
 try { window.speechSynthesis && window.speechSynthesis.getVoices(); } catch (e) {}
+// block pinch / double-tap zoom (iOS ignores user-scalable=no)
+["gesturestart", "gesturechange", "gestureend"].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), { passive: false }));
+document.addEventListener("touchmove", e => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
 
 render();
 })();
