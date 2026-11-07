@@ -219,12 +219,26 @@ input:focus, select:focus, textarea:focus { border-color: var(--blue); outline: 
 .support .qr { width: 132px; max-width: 100%; background: #fff; border-radius: 12px; padding: 6px; display: block; image-rendering: pixelated; box-shadow: 0 4px 0 #0A0C12; }
 .support .tag { display: inline-block; margin-top: 8px; font-size: .72rem; font-weight: 800; letter-spacing: .06em; color: #2A1C00; background: var(--yellow); border-radius: 6px; padding: 2px 8px; }
 @media (max-width: 420px) { .support { grid-template-columns: 1fr; justify-items: center; text-align: center; } .support .qr { width: 180px; } }
+.lbrow { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; background: var(--panel); border: 2px solid var(--line); border-radius: 14px; min-width: 0; }
+.lbrow .rk { font-family: var(--display); font-size: 1.25rem; text-align: center; color: var(--muted); }
+.lbrow .nm { font-weight: 700; overflow-wrap: anywhere; min-width: 0; }
+.lbrow .sc { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; color: var(--yellow); font-variant-numeric: tabular-nums; }
+.lbrow.top1 { border-color: #FFD95A; background: linear-gradient(90deg, rgba(255,201,51,.18), var(--panel)); }
+.lbrow.top2 { border-color: #C9D3E8; } .lbrow.top3 { border-color: #E59A5B; }
+.lbrow.me { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(43,140,255,.25); }
+.lbrow .you2 { font-size: .64rem; font-weight: 800; background: var(--blue); color: #fff; border-radius: 6px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+.lblist { display: flex; flex-direction: column; gap: 8px; }
+.myteam { background: linear-gradient(135deg, #1D3A63, #2A2148); border: 3px solid var(--blue); border-radius: 18px; padding: 14px; box-shadow: 0 5px 0 #0A0C12; display: flex; flex-direction: column; gap: 10px; }
+.myteam .big { font-family: var(--display); font-size: 1.6rem; overflow-wrap: anywhere; }
+.myteam .stats3 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.myteam .stats3 div { background: rgba(0,0,0,.25); border-radius: 12px; padding: 8px 10px; }
+.myteam .stats3 strong { display: block; font-family: var(--display); font-size: 1.4rem; font-weight: 400; color: var(--yellow); }
 .wa { --c: #25D366; --d: #128C4A; font-size: 1.05rem; padding: 14px 16px; }
 .numrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-weight: 700; }
 .numrow code { font-family: var(--body); background: var(--well); border: 2px solid var(--line); border-radius: 8px; padding: 4px 8px; user-select: all; }
 
 nav.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); background: rgba(17,19,27,.92); backdrop-filter: blur(8px); border-top: 2px solid var(--line); }
-nav.dock .in { max-width: 660px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+nav.dock .in { max-width: 660px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
 nav.dock button { border: 0; border-radius: 12px; padding: 8px 2px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 800; font-size: .72rem; color: var(--muted); background: var(--panel); box-shadow: 0 4px 0 #0A0C12; position: relative; min-width: 0; }
 nav.dock button span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 nav.dock button svg { width: 24px; height: 24px; }
@@ -296,6 +310,7 @@ nav.dock .lk { position: absolute; top: 3px; right: 6px; font-size: .7rem; }
   <button data-tab="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3 4 14h7l-1 7 10-11h-7z"/></svg><span data-t="quests">Quests</span></button>
   <button data-tab="rewards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-1.5 11h-13z"/><path d="M8.5 9V7a3.5 3.5 0 0 1 7 0v2"/></svg><span data-t="shop">Shop</span></button>
   <button data-tab="family"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="8" rx="2"/><rect x="13" y="7" width="7" height="7" rx="2"/><path d="M3 20c.5-3 2.5-5 4-5s3.5 2 4 5M13 20c.4-2.2 1.8-3.5 3.5-3.5S19.6 17.8 20 20"/></svg><span data-t="squad">Squad</span><i class="lk" id="squadlock" hidden>🔒</i></button>
+  <button data-tab="ranks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg><span data-t="ranks">Ranks</span></button>
   <button data-tab="feedback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8.5 9.5h7M8.5 12.5h4"/></svg><span data-t="feedback">Feedback</span></button>
 </div></nav>
 <div id="modal" class="modal" hidden></div>
@@ -428,6 +443,7 @@ const T = {
     saved: "Saved", nameFirst: "Add a name first", typeQuest: "Type a quest first", typeReward: "Type a reward name first", addedShop: "Added to the shop", joined: n => `${n} joined the squad!`, unlockedR: (n, r) => `${n} unlocked: ${r}!`, pinSet: "PIN set", pinRemoved: "PIN removed", lockedT: "Parent tools locked", bonusGiven: (s, n) => `+${s} bonus stars for ${n}!`, lookGood: "Looking good!", numCopied: "Number copied", selectNum: "Select the number to copy it",
     lvUp: "LEVEL UP!", nowLv: (n, l, r) => `${n} is now LV ${l} · ${r}`, wellDone: n => `Well done, ${n}!`, readAloud: "Read it to me",
     fbT: "Help make Bintang better", fbIntro: "This app is new and built by a dad of three boys. Tell me what works and what to fix. Your message goes straight to me on WhatsApp.", fbRate: "How do you like it?", fbLike: "What do you like?", fbLikePh: "e.g. My son loves levelling up", fbImprove: "What should I improve or add?", fbImprovePh: "e.g. Add a timer for quests", fbAges: "Your kids' ages (optional)", fbAgesPh: "e.g. 3 and 8", fbSend: "Send on WhatsApp", fbHint: "WhatsApp opens with your message ready. Just tap send. If it doesn't open, message this number:", copyNum: "Copy number",
+    ranks: "Ranks", lbT: "Leaderboard", lbSub: "Every family playing Bintang", lbJoinT: "Join the leaderboard", lbJoinP: "Pick a squad name. Only the squad name and your family's total stars are shared. Kids' names stay on this phone.", lbName: "Squad name", lbSuggest: "Suggest a name", lbJoin: "Join", lbRename: "Rename", lbLeave: "Leave leaderboard", lbLeaveQ: "Remove your squad from the leaderboard?", lbYourRank: "Your rank", lbTotal: "Stars this season", lbRemoved: "This squad was removed from the leaderboard by the app owner.", lbEmpty: "No squads yet. Be the first!", lbLoading: "Loading the leaderboard…", lbOffline: "Can't load the leaderboard right now. Check your internet and try again.", lbRefresh: "Refresh", lbDemo: "Start your own squad first, then you can join the leaderboard.", lbTaken: "That squad name is taken. Try another.", lbBlocked: "Please choose a friendlier name.", lbLen: "Use 2 to 24 characters.", lbJoined: n => `${n} joined the leaderboard!`, lbLeft: "You left the leaderboard", lbSquads: n => `${n} squad${n === 1 ? "" : "s"}`, lbAuto: "Your score updates automatically as stars are earned. Scores start from zero whenever a new season begins.",
     supT: "Support Bintang", supP: "Bintang is free for families. If it helps at home, you can buy me a teh tarik ☕", supHow: "Scan with any Malaysian banking app or e-wallet. On your phone? Long-press the QR to save it, then use \"Scan from gallery\" in your banking app.", supAlt: "DuitNow QR code to support Bintang"
   },
   ms: {
@@ -457,6 +473,7 @@ const T = {
     saved: "Disimpan", nameFirst: "Masukkan nama dahulu", typeQuest: "Taip misi dahulu", typeReward: "Taip nama ganjaran dahulu", addedShop: "Ditambah ke kedai", joined: n => `${n} sertai skuad!`, unlockedR: (n, r) => `${n} dapat: ${r}!`, pinSet: "PIN ditetapkan", pinRemoved: "PIN dibuang", lockedT: "Alat ibu bapa dikunci", bonusGiven: (s, n) => `+${s} bintang bonus untuk ${n}!`, lookGood: "Nampak hebat!", numCopied: "Nombor disalin", selectNum: "Pilih nombor untuk salin",
     lvUp: "NAIK TAHAP!", nowLv: (n, l, r) => `${n} kini TAHAP ${l} · ${r}`, wellDone: n => `Syabas, ${n}!`, readAloud: "Bacakan untuk saya",
     fbT: "Bantu jadikan Bintang lebih baik", fbIntro: "Aplikasi ini baru, dibina oleh seorang ayah kepada tiga anak lelaki. Beritahu apa yang bagus dan apa perlu dibaiki. Mesej anda terus sampai kepada saya di WhatsApp.", fbRate: "Apa pendapat anda?", fbLike: "Apa yang anda suka?", fbLikePh: "cth. Anak saya suka naik tahap", fbImprove: "Apa perlu dibaiki atau ditambah?", fbImprovePh: "cth. Tambah pemasa untuk misi", fbAges: "Umur anak-anak (pilihan)", fbAgesPh: "cth. 3 dan 8", fbSend: "Hantar di WhatsApp", fbHint: "WhatsApp akan dibuka dengan mesej anda. Tekan hantar sahaja. Jika tidak terbuka, hantar ke nombor ini:", copyNum: "Salin nombor",
+    ranks: "Ranking", lbT: "Papan pendahulu", lbSub: "Semua keluarga yang bermain Bintang", lbJoinT: "Sertai papan pendahulu", lbJoinP: "Pilih nama skuad. Hanya nama skuad dan jumlah bintang keluarga anda dikongsi. Nama anak kekal dalam telefon ini.", lbName: "Nama skuad", lbSuggest: "Cadangkan nama", lbJoin: "Sertai", lbRename: "Tukar nama", lbLeave: "Keluar papan pendahulu", lbLeaveQ: "Buang skuad anda dari papan pendahulu?", lbYourRank: "Kedudukan anda", lbTotal: "Bintang musim ini", lbRemoved: "Skuad ini telah dibuang dari papan pendahulu oleh pemilik aplikasi.", lbEmpty: "Belum ada skuad. Jadilah yang pertama!", lbLoading: "Memuatkan papan pendahulu…", lbOffline: "Tidak dapat memuatkan papan pendahulu. Semak internet anda dan cuba lagi.", lbRefresh: "Muat semula", lbDemo: "Mulakan skuad anda sendiri dahulu, kemudian sertai papan pendahulu.", lbTaken: "Nama skuad itu sudah diambil. Cuba nama lain.", lbBlocked: "Sila pilih nama yang lebih sopan.", lbLen: "Guna 2 hingga 24 aksara.", lbJoined: n => `${n} sertai papan pendahulu!`, lbLeft: "Anda telah keluar dari papan pendahulu", lbSquads: n => `${n} skuad`, lbAuto: "Skor anda dikemas kini secara automatik apabila bintang dikumpul. Skor bermula semula setiap kali musim baru bermula.",
     supT: "Sokong Bintang", supP: "Bintang percuma untuk keluarga. Jika ia membantu di rumah, belanja saya secawan teh tarik ☕", supHow: "Imbas dengan mana-mana aplikasi bank atau e-dompet Malaysia. Guna telefon? Tekan lama kod QR untuk simpan, kemudian guna \"Imbas dari galeri\" dalam aplikasi bank anda.", supAlt: "Kod QR DuitNow untuk menyokong Bintang"
   }
 };
@@ -477,7 +494,7 @@ const rewardTitle = (r) => { const id = r.rid || RTITLE2ID[r.title]; return id &
 const mkReward = (rid) => { const r = RW[rid]; return { id: uid(), rid, title: r[0], icon: r[2], cost: r[3] }; };
 function weekStart(d) { const x = new Date(d || new Date()); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; }
 
-function baseState() { return { v: 2, example: false, kids: [], rewards: ["screen", "dinner", "late", "icecream", "park"].map(mkReward), done: {}, spent: {}, cspent: {}, history: [], bonuses: [], badges: {}, owned: {}, equip: {}, team: { title: "", target: 100 }, pin: null }; }
+function baseState() { return { v: 2, example: false, kids: [], rewards: ["screen", "dinner", "late", "icecream", "park"].map(mkReward), done: {}, spent: {}, cspent: {}, history: [], bonuses: [], badges: {}, owned: {}, equip: {}, team: { title: "", target: 100 }, pin: null, lb: { joined: false, name: "" } }; }
 function exampleState() {
   const a = { id: uid(), name: "Aariz Ezra", age: 3, avatar: "🐼", color: "--k1", little: true, chores: starterFor(3) };
   const d = { id: uid(), name: "Adrian Yusuf", age: 8, avatar: "🦖", color: "--k2", little: false, chores: starterFor(8) };
@@ -498,6 +515,7 @@ function normalize(s) {
   for (const k of ["history", "bonuses", "rewards", "kids"]) if (!Array.isArray(s[k])) s[k] = k === "rewards" ? b.rewards : [];
   if (!s.team || typeof s.team !== "object") s.team = { title: "", target: Math.max(40, 40 * s.kids.length) };
   if (s.pin === undefined) s.pin = null;
+  if (!s.lb || typeof s.lb !== "object") s.lb = { joined: false, name: "" };
   s.kids.forEach(k => {
     if (k.little === undefined) k.little = k.age <= 5;
     if (!Array.isArray(k.chores)) k.chores = [];
@@ -516,6 +534,7 @@ try { const tb = localStorage.getItem(LS + "-tab"); if (tb && tb !== "family") t
 
 function save() {
   try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
+  if (state.lb && state.lb.joined) { clearTimeout(save.lbT); save.lbT = setTimeout(() => lbSubmit(state.lb.name).catch(() => {}), 2500); }
   if (dbDoc && dbReady) {
     clearTimeout(saveT);
     saveT = setTimeout(() => { dbDoc.set({ state: JSON.stringify(state), at: Date.now() }).catch(() => {}); }, 500);
@@ -893,6 +912,81 @@ function viewFamily() {
   </section>`;
 }
 
+// ================= leaderboard =================
+const LB_API = "/api/leaderboard";
+const NAME_A = ["Super", "Mighty", "Turbo", "Ninja", "Rocket", "Thunder", "Golden", "Jungle", "Galaxy", "Kampung", "Lightning", "Brave", "Cosmic", "Happy"];
+const NAME_B = ["Tigers", "Rangers", "Stars", "Dragons", "Heroes", "Legends", "Champs", "Rimau", "Helang", "Explorers", "Rockets", "Squad", "Kancil", "Pandas"];
+const suggestName = () => NAME_A[Math.floor(Math.random() * NAME_A.length)] + " " + NAME_B[Math.floor(Math.random() * NAME_B.length)];
+const familyTotal = () => {
+  const from = state.lb && state.lb.season ? dkey(new Date(state.lb.season)) : "";
+  let n = 0;
+  state.kids.forEach(k => { const d = state.done[k.id] || {}; for (const day in d) if (day >= from) for (const c in d[day]) n += d[day][c]; });
+  return n;
+};
+function lbCreds() {
+  if (!state.lb.id) { state.lb.id = (uid() + uid() + uid()).replace(/[^a-z0-9]/g, "").slice(0, 20); }
+  if (!state.lb.token) { const a = new Uint8Array(18); try { crypto.getRandomValues(a); } catch (e) { for (let i = 0; i < a.length; i++) a[i] = Math.floor(Math.random() * 256); } state.lb.token = Array.from(a, b => b.toString(16).padStart(2, "0")).join(""); }
+  return { id: state.lb.id, token: state.lb.token };
+}
+async function lbPost(body) {
+  const r = await fetch(LB_API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  let j = {}; try { j = await r.json(); } catch (e) {}
+  if (!r.ok) { const err = new Error(j.error || "error"); err.code = j.error; err.status = r.status; throw err; }
+  return j;
+}
+async function lbSubmit(name, again) {
+  try {
+    const r = await lbPost({ ...lbCreds(), name, score: familyTotal() });
+    if (typeof r.seasonStart === "number" && r.seasonStart !== (state.lb.season || 0)) {
+      state.lb.season = r.seasonStart; try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
+      if (!again) return lbSubmit(name, true);
+    }
+    return r;
+  } catch (err) {
+    if (err.code === "removed") { state.lb.joined = false; try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+    throw err;
+  }
+}
+function lbErrText(e) { return e.code === "removed" ? t("lbRemoved") : e.code === "name_taken" ? t("lbTaken") : e.code === "name_blocked" ? t("lbBlocked") : e.code === "name_length" ? t("lbLen") : t("lbOffline"); }
+async function lbLoad() {
+  ui.lb = { ...(ui.lb || {}), loading: true, err: "" }; if (tab === "ranks") render();
+  try {
+    const r = await fetch(LB_API, { cache: "no-store" });
+    if (!r.ok) throw new Error("bad");
+    const j = await r.json();
+    ui.lb = { loading: false, err: "", squads: j.squads || [], total: j.total || 0 };
+    if (typeof j.seasonStart === "number" && j.seasonStart !== (state.lb.season || 0)) {
+      state.lb.season = j.seasonStart; try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {}
+      if (state.lb.joined) lbSubmit(state.lb.name).then(() => lbLoad()).catch(() => {});
+    }
+  } catch (e) { ui.lb = { ...(ui.lb || {}), loading: false, err: t("lbOffline") }; }
+  if (tab === "ranks") render();
+}
+function viewRanks() {
+  const lb = ui.lb || { loading: true };
+  const squads = lb.squads || [];
+  const myIdx = state.lb.joined ? squads.findIndex(s => s.id === state.lb.id) : -1;
+  const medal = i => i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : String(i + 1);
+  let mine;
+  if (state.example) mine = `<div class="panel"><h3>🏆 ${t("lbJoinT")}</h3><p class="hint">${t("lbDemo")}</p><div><button class="btn yellow" data-act="start-own">${t("startMine")}</button></div></div>`;
+  else if (!state.lb.joined || ui.lbRename) mine = `<div class="panel"><h3>🏆 ${state.lb.joined ? t("lbRename") : t("lbJoinT")}</h3><p class="hint">${t("lbJoinP")}</p>
+      <div class="row"><label class="f grow">${t("lbName")}<input type="text" id="lb-name" maxlength="24" value="${esc(ui.lbDraft ?? (state.lb.name || suggestName()))}"></label>
+      <button class="btn small gray" data-act="lb-suggest" style="align-self:flex-end" aria-label="${t("lbSuggest")}">🎲</button></div>
+      ${ui.lbMsg ? `<div class="merr" style="text-align:left;margin:0">${esc(ui.lbMsg)}</div>` : ""}
+      <div class="row"><button class="btn green" data-act="lb-join" ${ui.lbBusy ? "disabled" : ""}>${state.lb.joined ? t("save") : t("lbJoin")}</button>${state.lb.joined ? `<button class="btn gray" data-act="lb-cancel">${t("cancel")}</button>` : ""}</div></div>`;
+  else mine = `<section class="myteam"><span class="lbl" style="color:#B9C2E8">${t("lbYourRank")}</span><div class="big">${esc(state.lb.name)}</div>
+      <div class="stats3"><div><span class="lbl">${t("lbYourRank")}</span><strong class="num">${myIdx >= 0 ? "#" + (myIdx + 1) : "–"}</strong></div><div><span class="lbl">${t("lbTotal")}</span><strong class="num">${familyTotal()}</strong></div></div>
+      <p class="hint" style="color:#B9C2E8">${t("lbAuto")}</p>
+      <div class="row"><button class="btn small gray" data-act="lb-rename">${t("lbRename")}</button>
+      ${ui.confirm === "lbleave" ? `<span class="confirm">${t("lbLeaveQ")} <button class="btn small red" data-act="lb-leave">${t("remove")}</button><button class="btn small gray" data-act="cancel">${t("keep")}</button></span>` : `<button class="btn small gray" data-act="ask" data-key="lbleave">${t("lbLeave")}</button>`}</div></section>`;
+  const listHtml = lb.loading && !squads.length ? `<div class="panel empty">${t("lbLoading")}</div>`
+    : lb.err && !squads.length ? `<div class="panel empty">${esc(lb.err)}<div style="margin-top:10px"><button class="btn small" data-act="lb-refresh">${t("lbRefresh")}</button></div></div>`
+    : !squads.length ? `<div class="panel empty">${t("lbEmpty")}</div>`
+    : `<div class="lblist">${squads.map((s, i) => `<div class="lbrow ${i < 3 ? "top" + (i + 1) : ""} ${i === myIdx ? "me" : ""}"><span class="rk">${medal(i)}</span><span class="nm">${esc(s.name)}${i === myIdx ? `<span class="you2">${t("playing") === "BERMAIN" ? "ANDA" : "YOU"}</span>` : ""}</span><span class="sc">${STAR(16)}${s.score}</span></div>`).join("")}</div>`;
+  return `<div class="section-head"><div><h2>🏆 ${t("lbT")}</h2><span>${t("lbSub")}${lb.total ? " · " + t("lbSquads", lb.total) : ""}</span></div><button class="btn small gray" data-act="lb-refresh">↻ ${t("lbRefresh")}</button></div>
+    ${mine}${listHtml}`;
+}
+
 const QR_DUITNOW = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU0AAAFNAQMAAAC+Pq+HAAAABlBMVEX////uLmi+0M6SAAAD4klEQVR42u1b3ZEiPQxsU/cOGciZyBsJoYwJhUhOzkSTAReB7kH2/DGwfF/VvezYVUvNsio/NKLd3fICffXV1z9aZGZmpmRm4r8KwCZswsL+1wycPt/yh5YCIK2vrADApvPfWFgAYNiApQqQCRRsMr0rPxys/1k6JiCOqSSUFP2ttC0lc9hJSFRrEwsAzgDYLHdcN6VnAStYQWZfIXEm+0r7pZc4PycAKa4+gY7rqpTuESjhek8A3RJLGZbA7u6qwKvWPjSuvwBgDADVBzIUACUh3RzWEoDh2117vz6VkpmZAuNVSFASUK6ZMpw1h3rG7+2qAGKKaYtsx3UlogQgAZmQCVw1yXe7xoOS5vfrrAApmSlIADIhAWUWbuhmsOusyy6y6YkQDoCrfqRfyZSUzAQkICGzpvIbqr1fX5XqS1zdRilISEAyOwI2E7bMr/h1veRAuK7BVNnlVSWtpsvEfwQASzVTnJ/81rH79bHTtLJqLJwAjFziH1aA7uEqY3LjJONvu4XsHIDXeuBohzzpwuV78ykADFJN52JXah1LAhKWilhlhE954Ej9qt8L+bOSAqQgcQ5gM6vsapYn17+nB/RouD7wAPBwmxkbD+7y60IUmJnUMFBYXGkB3MO/fbD8+1/D0gnaQXxXsiqyFKvvv9dy5uzvnD4XGT8Y15leuT7xjOsg+6UutKwyQc2qMzgPvV+fjy2wgEwxZdCObV5MAdR72wnW3Gc5Baz4tZ9bGGN9GdMYEkY/pkpqL3Pp7LeqLdCZBbDQDh3X2ZxWDiCdpP4CsdWuJIuHVsBS+bXzwFuKHSa8ZhZwI6vutsg81Jq5mM0yH3C48t71C0jPpmjtSpZdNQ0VrdPSkOplsd00WpGqdXu/TmLfgz8lIaFMlsnMMgtnXoTVl4XTd1hTRIrbGUDHFQDoORvgNuuXWc3i5AHslL4umXYRU/FB+DW+CemW59ZZqoly9TSBa/Z0GF3iYcXT478eW6TOAmZCwkJmuc5X8p4o1dUHl44bVkfom4Nr4aGqzEdLU8QV/96u+uqLcFh+TeubVNpyFM+pW5xSJywZwzZMiZ0HXtKrPA9ZHVSpSsuz2Nau/ZB/Xyovb/5pG6/U80qAKrR6mPJyyBr3ET4BGEMIIWJMILvHlriUBBagZNyCfXVcd0pjRVEhrWHTxm4pafWmlWMna2pmeehh9eelsikdw1UBvl8bu7KghIRbQunh3/tSnfg17SX7JZZYb7diDCGzSQm/M4bOA8D25h8Qo0O1SFNLDreny5ctdKHVEKZ9Eh3X5Y11n6roJ/8JoHUcSH7dSlpWkPtwpa+++vqX6y/YlJ5zm5OTJAAAAABJRU5ErkJggg==";
 function viewSupport() {
   return `<section class="support"><div><h3>☕ ${t("supT")}</h3><p>${t("supP")}</p><p>${t("supHow")}</p><span class="tag">DuitNow QR</span></div>
@@ -945,7 +1039,7 @@ function render() {
   </header>
   ${state.example ? `<div class="banner"><div><h3>${t("demoT")}</h3><p>${t("demoP")}</p></div><button class="btn yellow" data-act="start-own">${t("startMine")}</button></div>` : ""}
   ${tab === "today" || tab === "rewards" ? viewPlayers() : ""}
-  ${tab === "today" ? viewToday() : tab === "rewards" ? viewRewards() : tab === "feedback" ? viewFeedback() : viewFamily()}`;
+  ${tab === "today" ? viewToday() : tab === "rewards" ? viewRewards() : tab === "feedback" ? viewFeedback() : tab === "ranks" ? viewRanks() : viewFamily()}`;
   document.querySelectorAll("nav.dock button").forEach(b => { if (b.dataset.tab === tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   document.querySelectorAll("nav.dock [data-t]").forEach(s => s.textContent = t(s.dataset.t));
   document.getElementById("squadlock").hidden = !(state.pin && !canParent());
@@ -1063,7 +1157,7 @@ function readKidForm(pre, base) {
   if (!(age >= 1 && age <= 17)) age = base.age || 6;
   return { name, age };
 }
-function setTab(tb) { tab = tb; ui.confirm = null; ui.editDays = null; fx.enter = true; try { localStorage.setItem(LS + "-tab", tb); } catch (e) {} render(); window.scrollTo(0, 0); }
+function setTab(tb) { tab = tb; ui.confirm = null; ui.editDays = null; fx.enter = true; if (tb === "ranks") { ui.lbMsg = ""; lbLoad(); } try { localStorage.setItem(LS + "-tab", tb); } catch (e) {} render(); window.scrollTo(0, 0); }
 document.querySelector("nav.dock").addEventListener("click", (e) => {
   const b = e.target.closest("button[data-tab]"); if (!b) return;
   sfx.tap();
@@ -1178,6 +1272,34 @@ document.getElementById("app").addEventListener("click", (e) => {
       save(); toast(t("saved")); break;
     }
     case "rate": fb.rating = +b.dataset.r; break;
+    case "lb-refresh": lbLoad(); return;
+    case "lb-suggest": ui.lbDraft = suggestName(); ui.lbMsg = ""; break;
+    case "lb-rename": requireParent(() => { ui.lbRename = true; ui.lbDraft = state.lb.name; ui.lbMsg = ""; render(); }); return;
+    case "lb-cancel": ui.lbRename = false; ui.lbDraft = null; ui.lbMsg = ""; break;
+    case "lb-join": {
+      const name = (document.getElementById("lb-name").value || "").trim();
+      ui.lbDraft = name;
+      if (name.length < 2 || name.length > 24) { ui.lbMsg = t("lbLen"); break; }
+      requireParent(async () => {
+        ui.lbBusy = true; ui.lbMsg = ""; render();
+        try {
+          const r = await lbSubmit(name);
+          state.lb.joined = true; state.lb.name = r.name || name; ui.lbRename = false; ui.lbDraft = null;
+          save(); sfx.badge(); confetti(); toast(t("lbJoined", state.lb.name));
+          await lbLoad();
+        } catch (err) { ui.lbMsg = lbErrText(err); sfx.error(); }
+        ui.lbBusy = false; render();
+      });
+      return;
+    }
+    case "lb-leave": {
+      requireParent(async () => {
+        try { await lbPost({ action: "leave", ...lbCreds() }); state.lb.joined = false; ui.confirm = null; save(); toast(t("lbLeft")); await lbLoad(); }
+        catch (err) { toast(t("lbOffline")); }
+        render();
+      });
+      return;
+    }
     case "copy-num": {
       try { navigator.clipboard.writeText("+60162097957").then(() => toast(t("numCopied")), () => toast(t("selectNum"))); } catch (err) { toast(t("selectNum")); }
       return;
@@ -1190,6 +1312,7 @@ document.getElementById("app").addEventListener("click", (e) => {
 
 document.getElementById("app").addEventListener("change", (e) => { if (e.target.id === "nk-copy") ui.newKid.copyFrom = e.target.value; });
 document.getElementById("app").addEventListener("input", (e) => {
+  if (e.target.id === "lb-name") { ui.lbDraft = e.target.value; return; }
   const map = { "fb-like": "like", "fb-improve": "improve", "fb-ages": "ages" };
   const k = map[e.target.id]; if (!k) return;
   fb[k] = e.target.value;
@@ -1198,7 +1321,7 @@ document.getElementById("app").addEventListener("input", (e) => {
 document.getElementById("app").addEventListener("keydown", (e) => {
   if (e.key !== "Enter" || e.target.tagName !== "INPUT") return;
   const id = e.target.id;
-  const btn = id.startsWith("nc-") ? e.target.nextElementSibling : id === "rw-title" ? document.querySelector('[data-act="add-reward"]') : id.startsWith("nk-") ? document.querySelector('[data-act="add-kid"]') : id.startsWith("goal-") ? document.querySelector('[data-act="save-goal"]') : null;
+  const btn = id.startsWith("nc-") ? e.target.nextElementSibling : id === "rw-title" ? document.querySelector('[data-act="add-reward"]') : id.startsWith("nk-") ? document.querySelector('[data-act="add-kid"]') : id.startsWith("goal-") ? document.querySelector('[data-act="save-goal"]') : id === "lb-name" ? document.querySelector('[data-act="lb-join"]') : null;
   if (btn) { e.preventDefault(); btn.click(); }
 });
 try { window.speechSynthesis && window.speechSynthesis.getVoices(); } catch (e) {}
