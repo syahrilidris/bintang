@@ -403,7 +403,7 @@ const DAYS = { en: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], ms: ["Ahd","Isn"
 const T = {
   en: {
     tagline: "Family quests & rewards", quests: "Quests", shop: "Shop", squad: "Squad", feedback: "Feedback",
-    playing: "PLAYING", demoT: "Demo squad", demoP: "Iman and Hakim are example players. Tap a quest to try it, then set up your own kids.", startMine: "Start my squad",
+    playing: "PLAYING", demoT: "Demo squad", demoP: "Aariz Ezra and Adrian Yusuf are example players. Tap a quest to try it, then set up your own kids.", startMine: "Start my squad",
     sQuests: "Quests", sToday: "Today", sStreak: "Streak",
     allT: "All quests complete!", allP: n => `${n} cleared every quest today. Legend!`,
     questsOf: n => `${n}'s quests`, noneToday: n => `No quests for ${n} today. Enjoy the day off!`, addQuests: "Add quests",
@@ -432,7 +432,7 @@ const T = {
   },
   ms: {
     tagline: "Misi & ganjaran keluarga", quests: "Misi", shop: "Kedai", squad: "Skuad", feedback: "Maklum balas",
-    playing: "BERMAIN", demoT: "Skuad contoh", demoP: "Iman dan Hakim ialah pemain contoh. Tekan satu misi untuk cuba, kemudian tambah anak anda sendiri.", startMine: "Mula skuad saya",
+    playing: "BERMAIN", demoT: "Skuad contoh", demoP: "Aariz Ezra dan Adrian Yusuf ialah pemain contoh. Tekan satu misi untuk cuba, kemudian tambah anak anda sendiri.", startMine: "Mula skuad saya",
     sQuests: "Misi", sToday: "Hari ini", sStreak: "Berturut",
     allT: "Semua misi selesai!", allP: n => `${n} siapkan semua misi hari ini. Hebat!`,
     questsOf: n => `Misi ${n}`, noneToday: n => `Tiada misi untuk ${n} hari ini. Selamat berehat!`, addQuests: "Tambah misi",
@@ -479,8 +479,8 @@ function weekStart(d) { const x = new Date(d || new Date()); x.setHours(0, 0, 0,
 
 function baseState() { return { v: 2, example: false, kids: [], rewards: ["screen", "dinner", "late", "icecream", "park"].map(mkReward), done: {}, spent: {}, cspent: {}, history: [], bonuses: [], badges: {}, owned: {}, equip: {}, team: { title: "", target: 100 }, pin: null }; }
 function exampleState() {
-  const a = { id: uid(), name: "Iman", age: 4, avatar: "🐼", color: "--k1", little: true, chores: starterFor(4) };
-  const d = { id: uid(), name: "Hakim", age: 9, avatar: "🦖", color: "--k2", little: false, chores: starterFor(9) };
+  const a = { id: uid(), name: "Aariz Ezra", age: 3, avatar: "🐼", color: "--k1", little: true, chores: starterFor(3) };
+  const d = { id: uid(), name: "Adrian Yusuf", age: 8, avatar: "🦖", color: "--k2", little: false, chores: starterFor(8) };
   const s = baseState(); s.example = true; s.kids = [a, d]; s.team = { title: "", target: 60 };
   const now = new Date();
   [[a, [2, 3, 3, 4, 5, 4]], [d, [3, 4, 6, 5, 6, 6]]].forEach(([k, counts]) => {
