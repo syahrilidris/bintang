@@ -165,6 +165,26 @@ header.top { display: flex; align-items: center; justify-content: space-between;
 .mem.on .ck { background: var(--green); border-color: var(--green); color: #fff; }
 .mem .no { font-family: var(--display); color: var(--gold); font-size: .85rem; min-width: 2.2ch; }
 
+.memwrap { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: stretch; min-width: 0; }
+.qlink { display: grid; place-items: center; min-width: 44px; padding: 0 8px; border-radius: 12px; border: 2px solid var(--teal); background: rgba(43,179,192,.12); color: #8FE3EA; text-decoration: none; font-weight: 800; font-size: .78rem; text-align: center; line-height: 1.1; }
+.seg.seg3 { grid-template-columns: repeat(3, 1fr); }
+.seg.seg3 button { font-size: .85rem; padding: 9px 2px; }
+.gcard { background: linear-gradient(160deg, #173A45, #22305A); border: 3px solid var(--teal); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 5px 0 #061012; text-align: center; }
+.gcard .gi { font-size: 4rem; line-height: 1; }
+.gcard h3 { font-size: 1.45rem; }
+.gcard p { margin: 0; font-size: 1rem; line-height: 1.5; color: #DCEFEC; text-wrap: pretty; }
+.gcard .say2 { font-family: var(--display); font-size: 1.1rem; color: var(--gold); background: rgba(0,0,0,.25); border-radius: 12px; padding: 8px 10px; }
+.gdots { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.gdots i { width: 9px; height: 9px; border-radius: 50%; background: #2E5560; }
+.gdots i.on { background: var(--gold); }
+.gpick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.gpick button { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 18px; border: 3px solid var(--line); background: var(--panel); box-shadow: 0 4px 0 #061012; }
+.gpick button .e { font-size: 2.6rem; }
+.gpick button b { font-family: var(--display); font-weight: 600; font-size: 1.15rem; }
+.gpick button.done { border-color: var(--green); }
+.rk { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; text-align: center; }
+.rk div { background: var(--well); border: 2px solid var(--line); border-radius: 12px; padding: 8px 2px; font-size: .78rem; font-weight: 800; color: var(--muted); }
+.rk b { display: block; font-family: var(--display); font-size: 1.6rem; color: var(--gold); }
 .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .grow { flex: 1 1 160px; min-width: 0; }
 label.f { display: flex; flex-direction: column; gap: 5px; font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
@@ -262,7 +282,7 @@ nav.dock .lk { position: absolute; top: 3px; right: 6px; font-size: .65rem; font
 <div class="wrap" id="app" aria-live="polite"></div>
 <nav class="dock" aria-label="Sections"><div class="in">
   <button data-tab="today"><span class="ic">🕌</span><span data-t="tToday">Hari ini</span></button>
-  <button data-tab="hafazan"><span class="ic">📖</span><span data-t="tHafazan">Hafazan</span></button>
+  <button data-tab="hafazan"><span class="ic">📖</span><span data-t="tHafazan">Belajar</span></button>
   <button data-tab="progress"><span class="ic">🌙</span><span data-t="tProgress">Kemajuan</span></button>
   <button data-tab="family"><span class="ic">👨‍👩‍👦</span><span data-t="tFamily">Keluarga</span><i class="lk" id="famlock" hidden>🔒</i></button>
   <button data-tab="feedback"><span class="ic">💬</span><span data-t="tFeedbackShort">Pendapat</span></button>
@@ -290,6 +310,40 @@ const DOA = [
   ["wuduk", "💧", "Doa selepas wuduk", "After wudhu"], ["belajar", "📚", "Doa sebelum belajar", "Before studying"],
   ["ibubapa", "💚", "Doa untuk ibu bapa", "For parents"]
 ];
+const quranUrl = id => id === "kursi" ? "https://quran.com/2/255" : `https://quran.com/${id}`;
+// [emoji, ms title, ms text, en title, en text, ms "say" line, en "say" line]
+const GUIDES = {
+  wudhu: [
+    ["🚰", "Bersedia", "Cari air yang bersih. Lipat lengan baju. Baca Bismillah.", "Get ready", "Find clean water. Roll up your sleeves. Say Bismillah.", "Bismillahirrahmanirrahim", "Bismillahirrahmanirrahim"],
+    ["🙌", "Basuh tangan", "Basuh kedua-dua tapak tangan hingga pergelangan, 3 kali.", "Wash your hands", "Wash both hands up to the wrists, 3 times.", "", ""],
+    ["👄", "Berkumur", "Masukkan air ke mulut, kumur-kumur, kemudian buang. 3 kali.", "Rinse your mouth", "Take water into your mouth, swish it around and spit it out. 3 times.", "", ""],
+    ["👃", "Bersihkan hidung", "Masukkan sedikit air ke hidung dan hembus keluar perlahan-lahan. 3 kali.", "Clean your nose", "Breathe a little water into your nose and gently blow it out. 3 times.", "", ""],
+    ["😊", "Basuh muka", "Basuh seluruh muka, dari dahi hingga dagu dan telinga ke telinga. Berniat dalam hati untuk berwuduk ketika air mula kena muka. 3 kali.", "Wash your face", "Wash your whole face, from forehead to chin and ear to ear. Make your intention for wudhu in your heart as the water first touches your face. 3 times.", "Sahaja aku mengangkat hadas kecil kerana Allah Taala", "I intend to perform wudhu for Allah"],
+    ["💪", "Basuh tangan hingga siku", "Basuh tangan kanan hingga siku, kemudian tangan kiri. 3 kali setiap satu.", "Wash your arms", "Wash your right arm up to the elbow, then your left. 3 times each.", "", ""],
+    ["🧑", "Sapu kepala", "Basahkan tangan dan sapu sebahagian kepala. 3 kali.", "Wipe your head", "Wet your hands and wipe over part of your head. 3 times.", "", ""],
+    ["👂", "Sapu telinga", "Sapu bahagian dalam dan luar kedua-dua telinga. 3 kali.", "Wipe your ears", "Wipe the inside and outside of both ears. 3 times.", "", ""],
+    ["🦶", "Basuh kaki", "Basuh kaki kanan hingga buku lali, kemudian kaki kiri. Jangan lupa celah jari kaki. 3 kali setiap satu.", "Wash your feet", "Wash your right foot up to the ankle, then your left. Don't forget between your toes. 3 times each.", "", ""],
+    ["🤲", "Doa selepas wuduk", "Hadap kiblat, angkat tangan dan baca doa selepas wuduk. Kini anda bersedia untuk solat!", "Dua after wudhu", "Face the qiblah, raise your hands and say the dua after wudhu. Now you're ready to pray!", "", ""]
+  ],
+  solat: [
+    ["💧", "Bersedia", "Ambil wuduk, pakai pakaian yang menutup aurat dan berdiri di tempat yang bersih menghadap kiblat.", "Get ready", "Do wudhu, wear clothes that cover your aurat and stand on a clean place facing the qiblah.", "", ""],
+    ["💭", "Niat", "Berniat dalam hati solat apa yang mahu dilakukan. Contoh untuk Subuh:", "Intention", "Make your intention in your heart for the prayer you are about to do. For example, for Subuh:", "Sahaja aku solat fardu Subuh dua rakaat kerana Allah Taala", "I intend to pray the 2 rakaat of Fajr for Allah"],
+    ["🙌", "Takbiratul ihram", "Angkat kedua-dua tangan hingga paras telinga dan sebut:", "Opening takbir", "Raise both hands up to your ears and say:", "Allahu Akbar", "Allahu Akbar"],
+    ["🧍", "Berdiri dan membaca", "Letak tangan kanan di atas tangan kiri di dada. Baca surah Al-Fatihah, kemudian satu surah pendek.", "Stand and recite", "Place your right hand over your left on your chest. Recite Al-Fatihah, then a short surah.", "", "", "fatihah"],
+    ["🙇", "Rukuk", "Sebut Allahu Akbar dan tunduk. Tangan di lutut, belakang lurus. Baca 3 kali:", "Bow (rukuk)", "Say Allahu Akbar and bow. Hands on your knees, back straight. Say 3 times:", "Subhana Rabbiyal 'Azim", "Subhana Rabbiyal 'Azim"],
+    ["🧍", "I'tidal", "Bangun berdiri tegak semula sambil menyebut:", "Stand up again", "Stand up straight again while saying:", "Sami'allahu liman hamidah. Rabbana lakal hamd", "Sami'allahu liman hamidah. Rabbana lakal hamd"],
+    ["🧎", "Sujud", "Sebut Allahu Akbar dan sujud. Tujuh anggota mesti menyentuh lantai: dahi, dua tapak tangan, dua lutut dan hujung jari dua kaki. Baca 3 kali:", "Prostrate (sujud)", "Say Allahu Akbar and prostrate. Seven parts touch the floor: forehead, both palms, both knees and the toes of both feet. Say 3 times:", "Subhana Rabbiyal A'la", "Subhana Rabbiyal A'la"],
+    ["🧘", "Duduk antara dua sujud", "Sebut Allahu Akbar dan duduk sebentar dengan tenang. Baca doa duduk antara dua sujud (minta ibu bapa ajarkan).", "Sit between the two sujud", "Say Allahu Akbar and sit calmly for a moment. Say the dua for sitting between the two prostrations (ask a parent to teach you).", "", ""],
+    ["🧎", "Sujud kedua", "Sebut Allahu Akbar dan sujud sekali lagi, sama seperti tadi. Ini tamat satu rakaat!", "Second sujud", "Say Allahu Akbar and prostrate again, just like before. That's one rakaat done!", "Subhana Rabbiyal A'la", "Subhana Rabbiyal A'la"],
+    ["🔁", "Rakaat seterusnya", "Bangun dan ulang dari langkah membaca Al-Fatihah hingga sujud kedua. Bagi solat 3 atau 4 rakaat, duduk untuk tahiyat awal selepas rakaat kedua.", "Next rakaat", "Stand up and repeat from reciting Al-Fatihah to the second sujud. For 3 or 4 rakaat prayers, sit for the first tahiyat after the second rakaat.", "", ""],
+    ["🤲", "Tahiyat akhir", "Pada rakaat terakhir, duduk dan baca tahiyat akhir serta selawat ke atas Nabi (minta ibu bapa atau ustaz ajarkan).", "Final sitting", "In the last rakaat, sit and recite the final tahiyat and salawat upon the Prophet (ask a parent or ustaz to teach you).", "", ""],
+    ["👋", "Salam", "Toleh ke kanan, kemudian ke kiri, sambil menyebut:", "Salam", "Turn your head to the right, then to the left, saying:", "Assalamu'alaikum warahmatullah", "Assalamu'alaikum warahmatullah"]
+  ]
+};
+const RAKAAT = [["subuh", 2], ["zohor", 4], ["asar", 4], ["maghrib", 3], ["isyak", 4]];
+function sayText(txt) {
+  try { const s = window.speechSynthesis; if (!s || muted) return; s.cancel(); const u = new SpeechSynthesisUtterance(txt); u.lang = lang === "ms" ? "ms-MY" : "en-GB"; u.rate = .9; const v = (s.getVoices() || []).find(x => x.lang && x.lang.toLowerCase().startsWith(lang)); if (v) u.voice = v; s.speak(u); } catch (e) {}
+}
 const HIJRI_M = { ms: ["Muharam", "Safar", "Rabiulawal", "Rabiulakhir", "Jamadilawal", "Jamadilakhir", "Rejab", "Syaaban", "Ramadan", "Syawal", "Zulkaedah", "Zulhijah"], en: ["Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qa'dah", "Dhu al-Hijjah"] };
 const DAYS = { ms: ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"], en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] };
 const AVATARS = ["🦁", "🐯", "🐘", "🦊", "🐼", "🐢", "🦖", "🐬", "🦉", "🐪", "🚀", "⚽", "🌙", "⭐", "🌻", "🦋"];
@@ -309,13 +363,15 @@ const BADGES = [
   ["surah10", "🏅", ["10 surah", "Hafal 10 surah"], ["10 surahs", "Memorise 10 surahs"]],
   ["doa5", "💚", ["Pandai berdoa", "Hafal 5 doa"], ["Duas learnt", "Memorise 5 duas"]],
   ["iqra", "🎓", ["Tamat Iqra", "Naik ke Al-Quran"], ["Iqra done", "Moved up to the Quran"]],
-  ["khatam", "🕋", ["Khatam!", "Tamat 30 juz"], ["Khatam!", "Finished all 30 juz"]]
+  ["khatam", "🕋", ["Khatam!", "Tamat 30 juz"], ["Khatam!", "Finished all 30 juz"]],
+  ["gwudhu", "💧", ["Pandai wuduk", "Tamat panduan wuduk"], ["Wudhu learnt", "Finished the wudhu guide"]],
+  ["gsolat", "🧎", ["Pandai solat", "Tamat panduan solat"], ["Prayer learnt", "Finished the prayer guide"]]
 ];
 
 // ================= language =================
 const T = {
   ms: {
-    tagline: "Solat, mengaji & hafazan", tToday: "Hari ini", tHafazan: "Hafazan", tProgress: "Kemajuan", tFamily: "Keluarga", tFeedback: "Maklum balas", tFeedbackShort: "Pendapat",
+    tagline: "Solat, mengaji & hafazan", tToday: "Hari ini", tHafazan: "Belajar", tProgress: "Kemajuan", tFamily: "Keluarga", tFeedback: "Maklum balas", tFeedbackShort: "Pendapat",
     demoT: "Keluarga contoh", demoP: "Aariz Ezra dan Adrian Yusuf ialah contoh. Cuba tandakan solat, kemudian tambah anak anda sendiri.", startMine: "Mula keluarga saya",
     setLocT: "Tetapkan lokasi", setLocP: "Untuk waktu solat JAKIM di kawasan anda.", useLoc: "📍 Guna lokasi saya", pickZone: "Pilih zon", next: "Solat seterusnya", inTime: "lagi", nowTime: "Sudah masuk waktu", tomorrow: "esok",
     sToday: "Hari ini", sStreak: "Berturut", sNur: "Nur",
@@ -342,10 +398,11 @@ const T = {
     inappT: "Buka dalam pelayar dahulu", inappP: "Aplikasi tidak boleh dipasang dari dalam WhatsApp atau Facebook. Buka dalam Safari atau Chrome.", inappS1: "Tekan menu ⋯ atau ⋮.", inappS2: "Pilih Buka dalam Safari / Chrome / pelayar.", inappS3: "Kemudian tekan Pasang aplikasi.", copyLink: "Salin pautan", linkCopied: "Pautan disalin. Tampal dalam Safari atau Chrome.", gotIt: "Faham",
     fbT: "Bantu jadikan Nur lebih baik", fbIntro: "Aplikasi ini baharu, dibina oleh seorang ayah kepada tiga anak lelaki. Kongsi pendapat anda terus ke WhatsApp saya.", fbRate: "Apa pendapat anda?", fbLike: "Apa yang anda suka?", fbImprove: "Apa perlu dibaiki atau ditambah?", fbAges: "Umur anak-anak (pilihan)", fbSend: "Hantar di WhatsApp", fbHint: "WhatsApp akan dibuka dengan mesej anda. Jika tidak, hantar ke nombor ini:", copyNum: "Salin nombor", numCopied: "Nombor disalin",
     supT: "Sokong Nur", supP: "Nur percuma untuk keluarga. Jika ia membantu, belanja saya secawan teh tarik ☕", supHow: "Imbas dengan mana-mana aplikasi bank atau e-dompet. Guna telefon? Tekan lama kod QR untuk simpan, kemudian guna \"Imbas dari galeri\".", supAlt: "Kod QR DuitNow untuk menyokong Nur",
-    sourceNote: "Waktu solat ikut zon JAKIM."
+    sourceNote: "Waktu solat ikut zon JAKIM.",
+    learnT: "Belajar", guideT: "Panduan", listen: "Baca & dengar", listenHint: "Tekan ▶ untuk baca dan dengar surah di Quran.com (teks Arab, terjemahan dan bacaan qari).", wudhuT: "Cara berwuduk", solatT: "Cara solat", steps: n => `${n} langkah`, back: "← Kembali", nextStep: "Seterusnya →", finish: "Selesai ✓", stepOf: (a, b) => `Langkah ${a} / ${b}`, guideDoneT: "Syabas!", guideDoneP: (n, g) => `${n} sudah belajar ${g}`, rakaatT: "Bilangan rakaat", guideNote: "Panduan ringkas untuk kanak-kanak mengikut mazhab Syafie. Belajarlah bersama ibu bapa atau ustaz/ustazah.", readIt: "🔊 Baca untuk saya", openFatihah: "▶ Dengar Al-Fatihah", allGuides: "← Semua panduan"
   },
   en: {
-    tagline: "Prayer, Quran & memorising", tToday: "Today", tHafazan: "Memorise", tProgress: "Progress", tFamily: "Family", tFeedback: "Feedback", tFeedbackShort: "Feedback",
+    tagline: "Prayer, Quran & memorising", tToday: "Today", tHafazan: "Learn", tProgress: "Progress", tFamily: "Family", tFeedback: "Feedback", tFeedbackShort: "Feedback",
     demoT: "Example family", demoP: "Aariz Ezra and Adrian Yusuf are examples. Try marking a prayer, then add your own kids.", startMine: "Start my family",
     setLocT: "Set your location", setLocP: "For JAKIM prayer times in your area.", useLoc: "📍 Use my location", pickZone: "Pick a zone", next: "Next prayer", inTime: "in", nowTime: "Time has started", tomorrow: "tomorrow",
     sToday: "Today", sStreak: "Streak", sNur: "Nur",
@@ -372,7 +429,8 @@ const T = {
     inappT: "Open in your browser first", inappP: "Apps can't be installed from inside WhatsApp or Facebook. Open this page in Safari or Chrome.", inappS1: "Tap the ⋯ or ⋮ menu.", inappS2: "Choose Open in Safari / Chrome / browser.", inappS3: "Then tap Install app.", copyLink: "Copy link", linkCopied: "Link copied. Paste it into Safari or Chrome.", gotIt: "Got it",
     fbT: "Help make Nur better", fbIntro: "This app is new and built by a dad of three boys. Share your thoughts straight to my WhatsApp.", fbRate: "How do you like it?", fbLike: "What do you like?", fbImprove: "What should I improve or add?", fbAges: "Your kids' ages (optional)", fbSend: "Send on WhatsApp", fbHint: "WhatsApp opens with your message ready. If it doesn't, message this number:", copyNum: "Copy number", numCopied: "Number copied",
     supT: "Support Nur", supP: "Nur is free for families. If it helps, you can buy me a teh tarik ☕", supHow: "Scan with any Malaysian banking app or e-wallet. On your phone? Long-press the QR to save it, then use \"Scan from gallery\".", supAlt: "DuitNow QR code to support Nur",
-    sourceNote: "Prayer times follow JAKIM zones."
+    sourceNote: "Prayer times follow JAKIM zones.",
+    learnT: "Learn", guideT: "Guides", listen: "Read & listen", listenHint: "Tap ▶ to read and listen to the surah on Quran.com (Arabic text, translation and recitation).", wudhuT: "How to do wudhu", solatT: "How to pray", steps: n => `${n} steps`, back: "← Back", nextStep: "Next →", finish: "Done ✓", stepOf: (a, b) => `Step ${a} of ${b}`, guideDoneT: "Well done!", guideDoneP: (n, g) => `${n} learnt ${g}`, rakaatT: "Number of rakaat", guideNote: "A simple guide for children following the Shafi'i school. Learn together with a parent or ustaz/ustazah.", readIt: "🔊 Read it to me", openFatihah: "▶ Listen to Al-Fatihah", allGuides: "← All guides"
   }
 };
 let lang = "ms";
@@ -396,7 +454,7 @@ function fmtTime(hm) {
 
 // ================= state =================
 const LS = "nur-v1";
-function mkKid(name, age, avatar, color, lvl) { return { id: uid(), name, age, avatar, color, track: defaultTrack(age), ngaji: { lvl: lvl || 0, khatam: 0 }, hafal: {}, doa: {} }; }
+function mkKid(name, age, avatar, color, lvl) { return { id: uid(), name, age, avatar, color, track: defaultTrack(age), ngaji: { lvl: lvl || 0, khatam: 0 }, hafal: {}, doa: {}, guides: {} }; }
 function baseState() { return { v: 1, example: false, kids: [], log: {}, badges: {}, pin: null, zone: null, zoneLabel: "" }; }
 function exampleState() {
   const s = baseState(); s.example = true;
@@ -418,7 +476,7 @@ function normalize(s) {
   const b = baseState();
   for (const k in b) if (s[k] === undefined) s[k] = b[k];
   if (!Array.isArray(s.kids)) s.kids = [];
-  s.kids.forEach(k => { k.track = k.track || defaultTrack(k.age); k.ngaji = k.ngaji || { lvl: 0, khatam: 0 }; k.hafal = k.hafal || {}; k.doa = k.doa || {}; });
+  s.kids.forEach(k => { k.track = k.track || defaultTrack(k.age); k.ngaji = k.ngaji || { lvl: 0, khatam: 0 }; k.hafal = k.hafal || {}; k.doa = k.doa || {}; k.guides = k.guides || {}; });
   return s;
 }
 let state = null;
@@ -475,12 +533,12 @@ function totals(k) {
   for (const day in L) { const l = L[day]; PRAYERS.forEach(p => { if (l[p.k]) prayers++; }); if (l.subuh) subuh++; if (l.ngaji) { ngajiDays++; pages += l.ngaji; } }
   return { prayers, ngajiDays, pages, subuh, hafal: Object.keys(k.hafal).length, doa: Object.keys(k.doa).length };
 }
-function nur(k) { const x = totals(k); return x.prayers + x.ngajiDays * 2 + x.hafal * 5 + x.doa * 3 + k.ngaji.lvl * 5 + k.ngaji.khatam * 50; }
+function nur(k) { const x = totals(k); return x.prayers + x.ngajiDays * 2 + x.hafal * 5 + x.doa * 3 + k.ngaji.lvl * 5 + k.ngaji.khatam * 50 + Object.keys(k.guides || {}).length * 5; }
 function level(k) { const n = nur(k); const lv = Math.floor(n / NUR_PER_LEVEL) + 1; return { lv, into: n % NUR_PER_LEVEL, rank: RANKS[lang][Math.min(7, lv - 1)] }; }
 function award(k, id) { state.badges[k.id] = state.badges[k.id] || {}; if (state.badges[k.id][id]) return false; state.badges[k.id][id] = dkey(); return true; }
 function checkBadges(k) {
   const x = totals(k), st = streak(k);
-  const tests = { first: x.prayers >= 1, full: isFull(k, dkey()), streak3: st >= 3, streak7: st >= 7, streak30: st >= 30, subuh7: x.subuh >= 7, ngaji7: x.ngajiDays >= 7, surah1: x.hafal >= 1, surah5: x.hafal >= 5, surah10: x.hafal >= 10, doa5: x.doa >= 5, iqra: k.ngaji.lvl >= 6 || k.ngaji.khatam > 0, khatam: k.ngaji.khatam > 0 };
+  const tests = { first: x.prayers >= 1, full: isFull(k, dkey()), streak3: st >= 3, streak7: st >= 7, streak30: st >= 30, subuh7: x.subuh >= 7, ngaji7: x.ngajiDays >= 7, surah1: x.hafal >= 1, surah5: x.hafal >= 5, surah10: x.hafal >= 10, doa5: x.doa >= 5, iqra: k.ngaji.lvl >= 6 || k.ngaji.khatam > 0, khatam: k.ngaji.khatam > 0, gwudhu: !!(k.guides && k.guides.wudhu), gsolat: !!(k.guides && k.guides.solat) };
   const fresh = []; for (const id in tests) if (tests[id] && award(k, id)) fresh.push(id); return fresh;
 }
 function after(k, lvBefore) {
@@ -594,14 +652,38 @@ function viewToday() {
     <div class="week">${days.map((d, i) => { const key = dkey(d), lg = logOf(k, key); return `<div class="wd ${i === 6 ? "today" : ""}"><span>${DAYS[lang][d.getDay()]}</span><span class="dots">${PRAYERS.map(p => `<i class="${lg[p.k] ? "on" : ""}"></i>`).join("")}<i class="${lg.ngaji ? "ng" : ""}"></i></span></div>`; }).join("")}</div>
   </section>`;
 }
+function viewGuide() {
+  const k = kidById(sel), g = ui.guide;
+  if (!g) {
+    const done = n => k && k.guides && k.guides[n];
+    return `<div class="gpick"><button class="${done("wudhu") ? "done" : ""}" data-act="guide" data-g="wudhu"><span class="e">💧</span><b>${t("wudhuT")}</b><span class="hint">${t("steps", GUIDES.wudhu.length)}${done("wudhu") ? " · ✓" : ""}</span></button>
+      <button class="${done("solat") ? "done" : ""}" data-act="guide" data-g="solat"><span class="e">🧎</span><b>${t("solatT")}</b><span class="hint">${t("steps", GUIDES.solat.length)}${done("solat") ? " · ✓" : ""}</span></button></div>
+      <section class="panel"><h3>${t("rakaatT")}</h3><div class="rk">${RAKAAT.map(([p, n]) => `<div><b>${n}</b>${pName(PRAYERS.find(x => x.k === p))}</div>`).join("")}</div></section>
+      <p class="note">ℹ️ ${t("guideNote")}</p>`;
+  }
+  const steps = GUIDES[g.kind], st = steps[g.i], ms = lang === "ms";
+  const title = ms ? st[1] : st[3], body = ms ? st[2] : st[4], sayLine = ms ? st[5] : st[6];
+  const last = g.i === steps.length - 1;
+  return `<button class="btn small gray" data-act="guide-exit" style="align-self:flex-start">${t("allGuides")}</button>
+    <section class="gcard"><span class="lbl" style="color:#B9D6D2">${g.kind === "wudhu" ? t("wudhuT") : t("solatT")} · ${t("stepOf", g.i + 1, steps.length)}</span>
+      <div class="gdots">${steps.map((_, i) => `<i class="${i <= g.i ? "on" : ""}"></i>`).join("")}</div>
+      <span class="gi" aria-hidden="true">${st[0]}</span><h3>${esc(title)}</h3><p>${esc(body)}</p>
+      ${sayLine ? `<div class="say2">${esc(sayLine)}</div>` : ""}
+      ${st[7] === "fatihah" ? `<a class="btn small" href="${quranUrl(1)}" target="_blank" rel="noopener">${t("openFatihah")}</a>` : ""}
+      <button class="btn small violet" data-act="guide-say">${t("readIt")}</button>
+      <div class="row" style="justify-content:space-between"><button class="btn gray" data-act="guide-step" data-d="-1" ${g.i === 0 ? "disabled" : ""}>${t("back")}</button>
+      ${last ? `<button class="btn green" data-act="guide-done">${t("finish")}</button>` : `<button class="btn gold" data-act="guide-step" data-d="1">${t("nextStep")}</button>`}</div></section>`;
+}
 function viewHafazan() {
   const k = kidById(sel);
   if (!k) return `<div class="panel empty">${t("noKids")}</div>`;
-  const seg = `<div class="seg"><button data-act="memseg" data-v="surah" aria-pressed="${ui.memSeg === "surah"}">📖 ${t("surahT")} · ${Object.keys(k.hafal).length}</button><button data-act="memseg" data-v="doa" aria-pressed="${ui.memSeg === "doa"}">🤲 ${t("doaT")} · ${Object.keys(k.doa).length}</button></div>`;
+  const seg = `<div class="seg seg3"><button data-act="memseg" data-v="surah" aria-pressed="${ui.memSeg === "surah"}">📖 ${t("surahT")}</button><button data-act="memseg" data-v="doa" aria-pressed="${ui.memSeg === "doa"}">🤲 ${t("doaT")}</button><button data-act="memseg" data-v="guide" aria-pressed="${ui.memSeg === "guide"}">🧭 ${t("guideT")}</button></div>`;
+  if (ui.memSeg === "guide") return `<div class="section-head"><h2>📖 ${t("learnT")}</h2></div>${seg}${viewGuide()}`;
   const list = ui.memSeg === "surah"
-    ? SURAH.map(([id, nm]) => { const on = !!k.hafal[id]; return `<button class="mem ${on ? "on" : ""}" data-act="mem" data-kind="hafal" data-id="${id}"><span class="no">${typeof id === "number" ? id : "★"}</span><span class="n">${esc(nm)}</span><span class="ck">✓</span></button>`; }).join("")
+    ? SURAH.map(([id, nm]) => { const on = !!k.hafal[id]; return `<div class="memwrap"><button class="mem ${on ? "on" : ""}" data-act="mem" data-kind="hafal" data-id="${id}"><span class="no">${typeof id === "number" ? id : "★"}</span><span class="n">${esc(nm)}</span><span class="ck">✓</span></button><a class="qlink" href="${quranUrl(id)}" target="_blank" rel="noopener" aria-label="${t("listen")}: ${esc(nm)}">▶</a></div>`; }).join("")
     : DOA.map(([id, ic, ms, en]) => { const on = !!k.doa[id]; return `<button class="mem ${on ? "on" : ""}" data-act="mem" data-kind="doa" data-id="${id}"><span>${ic}</span><span class="n">${esc(lang === "ms" ? ms : en)}</span><span class="ck">✓</span></button>`; }).join("");
-  return `<div class="section-head"><h2>📖 ${t("hafazanT")}</h2></div>${seg}<p class="hint">${t("tapMem")}</p><div class="grid2">${list}</div>`;
+  return `<div class="section-head"><h2>📖 ${t("learnT")}</h2><span>${ui.memSeg === "surah" ? Object.keys(k.hafal).length + "/" + SURAH.length : Object.keys(k.doa).length + "/" + DOA.length} ${t("memorised")}</span></div>${seg}
+    <p class="hint">${ui.memSeg === "surah" ? t("listenHint") + " " : ""}${t("tapMem")}</p><div class="grid2">${list}</div>`;
 }
 function viewProgress() {
   const k = kidById(sel);
@@ -859,7 +941,16 @@ document.getElementById("app").addEventListener("click", e => {
     case "ngaji": { if (!k) return; const lvB = level(k).lv; dayLog(k, dkey()).ngaji = 1; save(); const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 10, "📗"); sfx.chime(); after(k, lvB); break; }
     case "ngaji-undo": return requireParent(() => { delete dayLog(k, dkey()).ngaji; sfx.undo(); save(); render(); });
     case "pg": { const l = dayLog(k, dkey()); l.ngaji = Math.max(1, Math.min(99, (l.ngaji || 1) + (+b.dataset.d))); save(); break; }
-    case "memseg": ui.memSeg = b.dataset.v; break;
+    case "memseg": ui.memSeg = b.dataset.v; ui.guide = null; break;
+    case "guide": ui.guide = { kind: b.dataset.g, i: 0 }; fx.enter = true; break;
+    case "guide-exit": ui.guide = null; try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (err) {} break;
+    case "guide-step": { const n = GUIDES[ui.guide.kind].length; ui.guide.i = Math.max(0, Math.min(n - 1, ui.guide.i + (+b.dataset.d))); try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (err) {} render(); window.scrollTo(0, 0); return; }
+    case "guide-say": { const st = GUIDES[ui.guide.kind][ui.guide.i], ms = lang === "ms"; sayText(`${ms ? st[1] : st[3]}. ${ms ? st[2] : st[4]} ${ms ? st[5] : st[6]}`); return; }
+    case "guide-done": {
+      const kind = ui.guide.kind; ui.guide = null;
+      if (k) { const lvB = level(k).lv; k.guides[kind] = dkey(); save(); celebrate(`<span class="big">${kind === "wudhu" ? "💧" : "🧎"}</span><h2>${t("guideDoneT")}</h2><p>${esc(t("guideDoneP", k.name, kind === "wudhu" ? t("wudhuT").toLowerCase() : t("solatT").toLowerCase()))}</p>`, "green", "badge"); confetti(); after(k, lvB); }
+      break;
+    }
     case "mem": {
       if (!k) return; const kind = b.dataset.kind, mid = b.dataset.id, store = k[kind];
       return requireParent(() => {
