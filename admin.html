@@ -32,7 +32,7 @@ input { width: 100%; padding: 11px 12px; border-radius: 10px; border: 2px solid 
 </head>
 <body>
 <div class="wrap">
-  <div><h1>⭐ Bintang leaderboard admin</h1><p class="muted">Only for the app owner. Remove squads or clear the whole leaderboard.</p></div>
+  <div><h1>⭐ Bintang leaderboard admin</h1><p class="muted">Only for the app owner. "Remove" takes a squad off for good (use it for rude names). "Clear" starts a fresh season for everyone.</p></div>
 
   <section class="card" id="login">
     <label for="key"><b>Admin password</b></label>
@@ -48,7 +48,7 @@ input { width: 100%; padding: 11px 12px; border-radius: 10px; border: 2px solid 
     <div class="msg" id="msg"></div>
     <div id="clearBox"><button class="btn red" id="clear">Clear the whole leaderboard</button></div>
     <div class="warn" id="confirmBox" hidden>
-      <p style="margin:0 0 8px"><b>Delete every squad from the leaderboard?</b> This can't be undone. Families keep their stars on their phones, and their squads reappear when they earn new stars.</p>
+      <p style="margin:0 0 8px"><b>Delete every squad from the leaderboard?</b> This can't be undone. This starts a new season: families keep their stars on their phones, and their squads come back from zero as they earn new stars.</p>
       <div class="row"><button class="btn red" id="clearYes">Yes, clear everything</button><button class="btn gray" id="clearNo">Cancel</button></div>
     </div>
   </section>
