@@ -233,6 +233,21 @@ input:focus, select:focus, textarea:focus { border-color: var(--blue); outline: 
 .myteam .stats3 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .myteam .stats3 div { background: rgba(0,0,0,.25); border-radius: 12px; padding: 8px 10px; }
 .myteam .stats3 strong { display: block; font-family: var(--display); font-size: 1.4rem; font-weight: 400; color: var(--yellow); }
+.installbar { position: fixed; left: 0; right: 0; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); z-index: 6; padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); animation: slideup .35s cubic-bezier(.2,.8,.3,1); }
+.installbar .in { max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; background: linear-gradient(135deg, #2A2148, #1D3A63); border: 3px solid var(--yellow); border-radius: 18px; padding: 10px 12px; box-shadow: 0 6px 0 #0A0C12, 0 10px 30px rgba(0,0,0,.5); }
+.installbar img { width: 48px; height: 48px; border-radius: 12px; }
+.installbar b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.15rem; line-height: 1.1; }
+.installbar small { color: #C9D0EE; font-size: .78rem; font-weight: 600; }
+.installbar .x { position: absolute; top: -10px; right: max(4px, env(safe-area-inset-right, 0px)); width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); background: var(--panel); color: var(--muted); font-weight: 800; font-size: .8rem; }
+@keyframes slideup { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.steps { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; counter-reset: st; }
+.steps li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; background: var(--well); border: 2px solid var(--line); border-radius: 12px; padding: 10px; font-weight: 600; font-size: .92rem; counter-increment: st; }
+.steps li::before { content: counter(st); width: 30px; height: 30px; border-radius: 50%; background: var(--yellow); color: #2A1C00; display: grid; place-items: center; font-family: var(--display); font-size: 1.05rem; }
+.steps .ic { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; background: #fff; color: #007AFF; vertical-align: middle; margin: 0 2px; }
+.steps .ic svg { width: 18px; height: 18px; }
+.pointer { text-align: center; font-size: 2rem; animation: bob 1s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .installbar, .pointer { animation: none; } }
 .wa { --c: #25D366; --d: #128C4A; font-size: 1.05rem; padding: 14px 16px; }
 .numrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-weight: 700; }
 .numrow code { font-family: var(--body); background: var(--well); border: 2px solid var(--line); border-radius: 8px; padding: 4px 8px; user-select: all; }
@@ -444,6 +459,10 @@ const T = {
     lvUp: "LEVEL UP!", nowLv: (n, l, r) => `${n} is now LV ${l} · ${r}`, wellDone: n => `Well done, ${n}!`, readAloud: "Read it to me",
     fbT: "Help make Bintang better", fbIntro: "This app is new and built by a dad of three boys. Tell me what works and what to fix. Your message goes straight to me on WhatsApp.", fbRate: "How do you like it?", fbLike: "What do you like?", fbLikePh: "e.g. My son loves levelling up", fbImprove: "What should I improve or add?", fbImprovePh: "e.g. Add a timer for quests", fbAges: "Your kids' ages (optional)", fbAgesPh: "e.g. 3 and 8", fbSend: "Send on WhatsApp", fbHint: "WhatsApp opens with your message ready. Just tap send. If it doesn't open, message this number:", copyNum: "Copy number",
     ranks: "Ranks", lbT: "Leaderboard", lbSub: "Every family playing Bintang", lbJoinT: "Join the leaderboard", lbJoinP: "Pick a squad name. Only the squad name and your family's total stars are shared. Kids' names stay on this phone.", lbName: "Squad name", lbSuggest: "Suggest a name", lbJoin: "Join", lbRename: "Rename", lbLeave: "Leave leaderboard", lbLeaveQ: "Remove your squad from the leaderboard?", lbYourRank: "Your rank", lbTotal: "Stars this season", lbRemoved: "This squad was removed from the leaderboard by the app owner.", lbEmpty: "No squads yet. Be the first!", lbLoading: "Loading the leaderboard…", lbOffline: "Can't load the leaderboard right now. Check your internet and try again.", lbRefresh: "Refresh", lbDemo: "Start your own squad first, then you can join the leaderboard.", lbTaken: "That squad name is taken. Try another.", lbBlocked: "Please choose a friendlier name.", lbLen: "Use 2 to 24 characters.", lbJoined: n => `${n} joined the leaderboard!`, lbLeft: "You left the leaderboard", lbSquads: n => `${n} squad${n === 1 ? "" : "s"}`, lbAuto: "Your score updates automatically as stars are earned. Scores start from zero whenever a new season begins.",
+    instT: "Get the Bintang app", instP: "Free · full screen · works offline", instBtn: "Install", instHow: "Show me", instHdr: "Install app", instDone: "Bintang is installed! Find the star icon on your home screen.",
+    iosT: "Add Bintang to your Home Screen", iosS1: "Tap the Share button", iosS1b: "at the bottom of Safari (top right on iPad).", iosS2: "Scroll down and tap", iosS2b: "Add to Home Screen", iosS3: "Tap Add. Bintang appears on your home screen like a normal app.",
+    andT: "Install Bintang", andS1: "Tap the ⋮ menu at the top right of Chrome.", andS2: "Tap Install app or Add to Home screen.", andS3: "Tap Install. Bintang appears on your home screen like a normal app.",
+    inappT: "Open in your browser first", inappP: "Apps can't be installed from inside WhatsApp, Facebook or Instagram. Open this page in Safari or Chrome, then install.", inappS1: "Tap the ⋯ or ⋮ menu in this screen.", inappS2: "Choose Open in Safari / Open in Chrome / Open in browser.", inappS3: "Then tap Install app on the Bintang screen.", copyLink: "Copy link", linkCopied: "Link copied. Paste it into Safari or Chrome.", gotIt: "Got it",
     supT: "Support Bintang", supP: "Bintang is free for families. If it helps at home, you can buy me a teh tarik ☕", supHow: "Scan with any Malaysian banking app or e-wallet. On your phone? Long-press the QR to save it, then use \"Scan from gallery\" in your banking app.", supAlt: "DuitNow QR code to support Bintang"
   },
   ms: {
@@ -474,6 +493,10 @@ const T = {
     lvUp: "NAIK TAHAP!", nowLv: (n, l, r) => `${n} kini TAHAP ${l} · ${r}`, wellDone: n => `Syabas, ${n}!`, readAloud: "Bacakan untuk saya",
     fbT: "Bantu jadikan Bintang lebih baik", fbIntro: "Aplikasi ini baru, dibina oleh seorang ayah kepada tiga anak lelaki. Beritahu apa yang bagus dan apa perlu dibaiki. Mesej anda terus sampai kepada saya di WhatsApp.", fbRate: "Apa pendapat anda?", fbLike: "Apa yang anda suka?", fbLikePh: "cth. Anak saya suka naik tahap", fbImprove: "Apa perlu dibaiki atau ditambah?", fbImprovePh: "cth. Tambah pemasa untuk misi", fbAges: "Umur anak-anak (pilihan)", fbAgesPh: "cth. 3 dan 8", fbSend: "Hantar di WhatsApp", fbHint: "WhatsApp akan dibuka dengan mesej anda. Tekan hantar sahaja. Jika tidak terbuka, hantar ke nombor ini:", copyNum: "Salin nombor",
     ranks: "Ranking", lbT: "Papan pendahulu", lbSub: "Semua keluarga yang bermain Bintang", lbJoinT: "Sertai papan pendahulu", lbJoinP: "Pilih nama skuad. Hanya nama skuad dan jumlah bintang keluarga anda dikongsi. Nama anak kekal dalam telefon ini.", lbName: "Nama skuad", lbSuggest: "Cadangkan nama", lbJoin: "Sertai", lbRename: "Tukar nama", lbLeave: "Keluar papan pendahulu", lbLeaveQ: "Buang skuad anda dari papan pendahulu?", lbYourRank: "Kedudukan anda", lbTotal: "Bintang musim ini", lbRemoved: "Skuad ini telah dibuang dari papan pendahulu oleh pemilik aplikasi.", lbEmpty: "Belum ada skuad. Jadilah yang pertama!", lbLoading: "Memuatkan papan pendahulu…", lbOffline: "Tidak dapat memuatkan papan pendahulu. Semak internet anda dan cuba lagi.", lbRefresh: "Muat semula", lbDemo: "Mulakan skuad anda sendiri dahulu, kemudian sertai papan pendahulu.", lbTaken: "Nama skuad itu sudah diambil. Cuba nama lain.", lbBlocked: "Sila pilih nama yang lebih sopan.", lbLen: "Guna 2 hingga 24 aksara.", lbJoined: n => `${n} sertai papan pendahulu!`, lbLeft: "Anda telah keluar dari papan pendahulu", lbSquads: n => `${n} skuad`, lbAuto: "Skor anda dikemas kini secara automatik apabila bintang dikumpul. Skor bermula semula setiap kali musim baru bermula.",
+    instT: "Dapatkan aplikasi Bintang", instP: "Percuma · skrin penuh · boleh guna tanpa internet", instBtn: "Pasang", instHow: "Tunjuk cara", instHdr: "Pasang aplikasi", instDone: "Bintang sudah dipasang! Cari ikon bintang di skrin utama anda.",
+    iosT: "Tambah Bintang ke Skrin Utama", iosS1: "Tekan butang Kongsi", iosS1b: "di bahagian bawah Safari (atas kanan di iPad).", iosS2: "Tatal ke bawah dan tekan", iosS2b: "Tambah ke Skrin Utama", iosS3: "Tekan Tambah. Bintang muncul di skrin utama seperti aplikasi biasa.",
+    andT: "Pasang Bintang", andS1: "Tekan menu ⋮ di atas kanan Chrome.", andS2: "Tekan Pasang aplikasi atau Tambah ke skrin utama.", andS3: "Tekan Pasang. Bintang muncul di skrin utama seperti aplikasi biasa.",
+    inappT: "Buka dalam pelayar dahulu", inappP: "Aplikasi tidak boleh dipasang dari dalam WhatsApp, Facebook atau Instagram. Buka halaman ini dalam Safari atau Chrome, kemudian pasang.", inappS1: "Tekan menu ⋯ atau ⋮ pada skrin ini.", inappS2: "Pilih Buka dalam Safari / Buka dalam Chrome / Buka dalam pelayar.", inappS3: "Kemudian tekan Pasang aplikasi pada skrin Bintang.", copyLink: "Salin pautan", linkCopied: "Pautan disalin. Tampal dalam Safari atau Chrome.", gotIt: "Faham",
     supT: "Sokong Bintang", supP: "Bintang percuma untuk keluarga. Jika ia membantu di rumah, belanja saya secawan teh tarik ☕", supHow: "Imbas dengan mana-mana aplikasi bank atau e-dompet Malaysia. Guna telefon? Tekan lama kod QR untuk simpan, kemudian guna \"Imbas dari galeri\" dalam aplikasi bank anda.", supAlt: "Kod QR DuitNow untuk menyokong Bintang"
   }
 };
@@ -987,6 +1010,58 @@ function viewRanks() {
     ${mine}${listHtml}`;
 }
 
+// ================= install prompt =================
+const UA = navigator.userAgent || "";
+const isIOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const isAndroid = /Android/i.test(UA);
+const inApp = /FBAN|FBAV|FB_IAB|Instagram|WhatsApp|Line\/|TikTok|musical_ly|Messenger|Snapchat|; wv\)/i.test(UA);
+const isStandalone = () => { try { return window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; } catch (e) { return false; } };
+let installEvt = null;
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; render(); });
+window.addEventListener("appinstalled", () => { installEvt = null; toast(t("instDone")); render(); });
+const canOfferInstall = () => !isStandalone() && (installEvt || isIOS || isAndroid || inApp);
+function installSnoozed() { try { return Date.now() < +(localStorage.getItem(LS + "-inst-snooze") || 0); } catch (e) { return false; } }
+function snoozeInstall() { try { localStorage.setItem(LS + "-inst-snooze", String(Date.now() + 2 * 864e5)); } catch (e) {} }
+let installBarReady = false; setTimeout(() => { installBarReady = true; render(); }, 2500);
+async function doInstall() {
+  if (inApp) { ui.modal = { type: "install", kind: "inapp" }; renderModal(); return; }
+  if (installEvt) {
+    const ev = installEvt; installEvt = null;
+    try { ev.prompt(); const c = await ev.userChoice; if (c && c.outcome === "accepted") { toast(t("instDone")); snoozeInstall(); } } catch (e) {}
+    render(); return;
+  }
+  ui.modal = { type: "install", kind: isIOS ? "ios" : "android" }; renderModal();
+}
+const SHARE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
+const ADD_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
+function installModalHtml(m) {
+  if (m.kind === "inapp") return `<h3>📲 ${t("inappT")}</h3><p class="hint" style="text-align:center">${t("inappP")}</p>
+    <ol class="steps"><li><span>${t("inappS1")}</span></li><li><span>${t("inappS2")}</span></li><li><span>${t("inappS3")}</span></li></ol>
+    <div class="row" style="justify-content:center"><button class="btn" data-m="copylink">🔗 ${t("copyLink")}</button><button class="btn gray" data-m="close">${t("gotIt")}</button></div>`;
+  if (m.kind === "ios") return `<h3>📲 ${t("iosT")}</h3>
+    <ol class="steps"><li><span>${t("iosS1")} <span class="ic">${SHARE_SVG}</span> ${t("iosS1b")}</span></li>
+    <li><span>${t("iosS2")} <span class="ic">${ADD_SVG}</span> <b>${t("iosS2b")}</b>.</span></li><li><span>${t("iosS3")}</span></li></ol>
+    <div class="pointer" aria-hidden="true">👇</div>
+    <div class="row" style="justify-content:center"><button class="btn gray" data-m="close">${t("gotIt")}</button></div>`;
+  return `<h3>📲 ${t("andT")}</h3><ol class="steps"><li><span>${t("andS1")}</span></li><li><span>${t("andS2")}</span></li><li><span>${t("andS3")}</span></li></ol>
+    <div class="row" style="justify-content:center"><button class="btn gray" data-m="close">${t("gotIt")}</button></div>`;
+}
+function renderInstallBar() {
+  let el = document.getElementById("installbar");
+  const show = installBarReady && canOfferInstall() && !installSnoozed() && !ui.modal && !document.querySelector(".celebrate");
+  if (!show) { if (el) el.remove(); return; }
+  if (!el) { el = document.createElement("div"); el.id = "installbar"; el.className = "installbar"; document.body.appendChild(el); }
+  el.innerHTML = `<div class="in" style="position:relative"><img src="/icon-192.png" alt=""><div style="min-width:0"><b>${t("instT")}</b><small>${t("instP")}</small></div>
+    <button class="btn yellow small" data-inst="go">${installEvt ? t("instBtn") : t("instHow")}</button>
+    <button class="x" data-inst="close" aria-label="${t("close")}">✕</button></div>`;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-inst]"); if (!b) return;
+  sfx.tap();
+  if (b.dataset.inst === "close") { snoozeInstall(); renderInstallBar(); return; }
+  snoozeInstall(); doInstall(); renderInstallBar();
+});
+
 const QR_DUITNOW = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAU0AAAFNAQMAAAC+Pq+HAAAABlBMVEX////uLmi+0M6SAAAD4klEQVR42u1b3ZEiPQxsU/cOGciZyBsJoYwJhUhOzkSTAReB7kH2/DGwfF/VvezYVUvNsio/NKLd3fICffXV1z9aZGZmpmRm4r8KwCZswsL+1wycPt/yh5YCIK2vrADApvPfWFgAYNiApQqQCRRsMr0rPxys/1k6JiCOqSSUFP2ttC0lc9hJSFRrEwsAzgDYLHdcN6VnAStYQWZfIXEm+0r7pZc4PycAKa4+gY7rqpTuESjhek8A3RJLGZbA7u6qwKvWPjSuvwBgDADVBzIUACUh3RzWEoDh2117vz6VkpmZAuNVSFASUK6ZMpw1h3rG7+2qAGKKaYtsx3UlogQgAZmQCVw1yXe7xoOS5vfrrAApmSlIADIhAWUWbuhmsOusyy6y6YkQDoCrfqRfyZSUzAQkICGzpvIbqr1fX5XqS1zdRilISEAyOwI2E7bMr/h1veRAuK7BVNnlVSWtpsvEfwQASzVTnJ/81rH79bHTtLJqLJwAjFziH1aA7uEqY3LjJONvu4XsHIDXeuBohzzpwuV78ykADFJN52JXah1LAhKWilhlhE954Ej9qt8L+bOSAqQgcQ5gM6vsapYn17+nB/RouD7wAPBwmxkbD+7y60IUmJnUMFBYXGkB3MO/fbD8+1/D0gnaQXxXsiqyFKvvv9dy5uzvnD4XGT8Y15leuT7xjOsg+6UutKwyQc2qMzgPvV+fjy2wgEwxZdCObV5MAdR72wnW3Gc5Baz4tZ9bGGN9GdMYEkY/pkpqL3Pp7LeqLdCZBbDQDh3X2ZxWDiCdpP4CsdWuJIuHVsBS+bXzwFuKHSa8ZhZwI6vutsg81Jq5mM0yH3C48t71C0jPpmjtSpZdNQ0VrdPSkOplsd00WpGqdXu/TmLfgz8lIaFMlsnMMgtnXoTVl4XTd1hTRIrbGUDHFQDoORvgNuuXWc3i5AHslL4umXYRU/FB+DW+CemW59ZZqoly9TSBa/Z0GF3iYcXT478eW6TOAmZCwkJmuc5X8p4o1dUHl44bVkfom4Nr4aGqzEdLU8QV/96u+uqLcFh+TeubVNpyFM+pW5xSJywZwzZMiZ0HXtKrPA9ZHVSpSsuz2Nau/ZB/Xyovb/5pG6/U80qAKrR6mPJyyBr3ET4BGEMIIWJMILvHlriUBBagZNyCfXVcd0pjRVEhrWHTxm4pafWmlWMna2pmeehh9eelsikdw1UBvl8bu7KghIRbQunh3/tSnfg17SX7JZZYb7diDCGzSQm/M4bOA8D25h8Qo0O1SFNLDreny5ctdKHVEKZ9Eh3X5Y11n6roJ/8JoHUcSH7dSlpWkPtwpa+++vqX6y/YlJ5zm5OTJAAAAABJRU5ErkJggg==";
 function viewSupport() {
   return `<section class="support"><div><h3>☕ ${t("supT")}</h3><p>${t("supP")}</p><p>${t("supHow")}</p><span class="tag">DuitNow QR</span></div>
@@ -1033,6 +1108,7 @@ function render() {
     <div class="brand"><span class="logo">${STAR(26)}</span><div style="min-width:0"><h1>BINTANG</h1><small>${t("tagline")}</small></div></div>
     <div class="hbtns">
       <button class="hb txt" data-act="lang" data-v="${lang === "en" ? "ms" : "en"}" aria-label="${lang === "en" ? "Bahasa Melayu" : "English"}">${lang === "en" ? "BM" : "EN"}</button>
+      ${canOfferInstall() ? `<button class="hb" data-act="install" aria-label="${t("instHdr")}">📲</button>` : ""}
       <button class="hb" data-act="mute" aria-label="${muted ? "Sound on" : "Sound off"}" aria-pressed="${!muted}">${muted ? "🔇" : "🔊"}</button>
       ${state.pin ? `<button class="hb ${unlocked ? "on" : ""}" data-act="${unlocked ? "lock" : "unlock"}" aria-label="${unlocked ? t("lockNow") : t("pinEnter")}">${unlocked ? "🔓" : "🔒"}</button>` : ""}
     </div>
@@ -1049,6 +1125,7 @@ function render() {
   if (fx.bump) { const p = app.querySelector(`.player[data-id="${fx.bump}"] .coins`); if (p) p.classList.add("bumpc"); }
   fx = {};
   renderModal();
+  renderInstallBar();
 }
 
 // ================= parent lock & modals =================
@@ -1079,6 +1156,7 @@ function renderModal() {
     m.shake = false;
     return;
   }
+  if (m.type === "install") { el.innerHTML = `<div class="mcard${anim}" role="dialog" aria-modal="true">${installModalHtml(m)}</div>`; return; }
   if (m.type === "bonus") {
     const k = kidById(m.kid); if (!k) { ui.modal = null; renderModal(); return; }
     el.innerHTML = `<div class="mcard${anim}" role="dialog" aria-modal="true"><div class="row" style="justify-content:center">${tile(k)}</div><h3>${esc(t("bonusT", k.name))}</h3>
@@ -1105,7 +1183,8 @@ document.getElementById("modal").addEventListener("click", (e) => {
   if (e.target.id === "modal") { ui.modal = null; renderModal(); return; }
   const b = e.target.closest("[data-m]"); if (!b) return;
   const a = b.dataset.m;
-  if (a === "close") { sfx.tap(); ui.modal = null; renderModal(); return; }
+  if (a === "close") { sfx.tap(); ui.modal = null; renderModal(); renderInstallBar(); return; }
+  if (a === "copylink") { const u = location.origin + "/"; try { navigator.clipboard.writeText(u).then(() => toast(t("linkCopied")), () => toast(u)); } catch (err) { toast(u); } return; }
   if (m.type === "pin") {
     if (a === "key" || a === "back") {
       if (m.busy) return;
@@ -1271,6 +1350,7 @@ document.getElementById("app").addEventListener("click", (e) => {
       if (state.team.won === weekId() && teamStars() < state.team.target) delete state.team.won;
       save(); toast(t("saved")); break;
     }
+    case "install": doInstall(); return;
     case "rate": fb.rating = +b.dataset.r; break;
     case "lb-refresh": lbLoad(); return;
     case "lb-suggest": ui.lbDraft = suggestName(); ui.lbMsg = ""; break;
