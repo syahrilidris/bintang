@@ -1,0 +1,19 @@
+{
+  "name": "Nur: Solat & Mengaji",
+  "short_name": "Nur",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1B1E",
+  "theme_color": "#0B1B1E",
+  "lang": "ms",
+  "description": "Jejak solat, mengaji dan hafazan anak-anak dengan cara yang menyeronokkan.",
+  "categories": ["education", "kids", "lifestyle"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
