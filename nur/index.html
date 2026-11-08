@@ -310,6 +310,7 @@ const DOA = [
   ["wuduk", "💧", "Doa selepas wuduk", "After wudhu"], ["belajar", "📚", "Doa sebelum belajar", "Before studying"],
   ["ibubapa", "💚", "Doa untuk ibu bapa", "For parents"]
 ];
+const levelUrl = l => l < 6 ? `https://www.youtube.com/results?search_query=${encodeURIComponent(`Iqra ${l + 1} bacaan lengkap`)}` : `https://quran.com/juz/${l - 5}`;
 const quranUrl = id => id === "kursi" ? "https://quran.com/2/255" : `https://quran.com/${id}`;
 // [emoji, ms title, ms text, en title, en text, ms "say" line, en "say" line]
 const GUIDES = {
@@ -399,7 +400,7 @@ const T = {
     fbT: "Bantu jadikan Nur lebih baik", fbIntro: "Aplikasi ini baharu, dibina oleh seorang ayah kepada tiga anak lelaki. Kongsi pendapat anda terus ke WhatsApp saya.", fbRate: "Apa pendapat anda?", fbLike: "Apa yang anda suka?", fbImprove: "Apa perlu dibaiki atau ditambah?", fbAges: "Umur anak-anak (pilihan)", fbSend: "Hantar di WhatsApp", fbHint: "WhatsApp akan dibuka dengan mesej anda. Jika tidak, hantar ke nombor ini:", copyNum: "Salin nombor", numCopied: "Nombor disalin",
     supT: "Sokong Nur", supP: "Nur percuma untuk keluarga. Jika ia membantu, belanja saya secawan teh tarik ☕", supHow: "Imbas dengan mana-mana aplikasi bank atau e-dompet. Guna telefon? Tekan lama kod QR untuk simpan, kemudian guna \"Imbas dari galeri\".", supAlt: "Kod QR DuitNow untuk menyokong Nur",
     sourceNote: "Waktu solat ikut zon JAKIM.",
-    learnT: "Belajar", guideT: "Panduan", listen: "Baca & dengar", listenHint: "Tekan ▶ untuk baca dan dengar surah di Quran.com (teks Arab, terjemahan dan bacaan qari).", wudhuT: "Cara berwuduk", solatT: "Cara solat", steps: n => `${n} langkah`, back: "← Kembali", nextStep: "Seterusnya →", finish: "Selesai ✓", stepOf: (a, b) => `Langkah ${a} / ${b}`, guideDoneT: "Syabas!", guideDoneP: (n, g) => `${n} sudah belajar ${g}`, rakaatT: "Bilangan rakaat", guideNote: "Panduan ringkas untuk kanak-kanak mengikut mazhab Syafie. Belajarlah bersama ibu bapa atau ustaz/ustazah.", readIt: "🔊 Baca untuk saya", openFatihah: "▶ Dengar Al-Fatihah", allGuides: "← Semua panduan"
+    learnT: "Belajar", guideT: "Panduan", listen: "Baca & dengar", listenHint: "Tekan ▶ untuk baca dan dengar surah di Quran.com (teks Arab, terjemahan dan bacaan qari).", wudhuT: "Cara berwuduk", solatT: "Cara solat", steps: n => `${n} langkah`, back: "← Kembali", nextStep: "Seterusnya →", finish: "Selesai ✓", stepOf: (a, b) => `Langkah ${a} / ${b}`, guideDoneT: "Syabas!", guideDoneP: (n, g) => `${n} sudah belajar ${g}`, rakaatT: "Bilangan rakaat", guideNote: "Panduan ringkas untuk kanak-kanak mengikut mazhab Syafie. Belajarlah bersama ibu bapa atau ustaz/ustazah.", readIt: "🔊 Baca untuk saya", openFatihah: "▶ Dengar Al-Fatihah", allGuides: "← Semua panduan", openLvl: l => `▶ Buka ${l}`, viaYT: "Video bacaan di YouTube", viaQC: "Baca & dengar di Quran.com", iqraOnline: "Iqra & Al-Quran online", iqraOnlineP: "Iqra 1–6 membuka video bacaan di YouTube (sila temani anak). Juz membuka Quran.com.", parentOnly: "🔒 Hanya ibu bapa boleh sahkan", setPinHint: "Tetapkan PIN di Keluarga supaya hanya ibu bapa boleh sahkan mengaji.", confirmNgaji: "📗 Sahkan sudah mengaji"
   },
   en: {
     tagline: "Prayer, Quran & memorising", tToday: "Today", tHafazan: "Learn", tProgress: "Progress", tFamily: "Family", tFeedback: "Feedback", tFeedbackShort: "Feedback",
@@ -430,7 +431,7 @@ const T = {
     fbT: "Help make Nur better", fbIntro: "This app is new and built by a dad of three boys. Share your thoughts straight to my WhatsApp.", fbRate: "How do you like it?", fbLike: "What do you like?", fbImprove: "What should I improve or add?", fbAges: "Your kids' ages (optional)", fbSend: "Send on WhatsApp", fbHint: "WhatsApp opens with your message ready. If it doesn't, message this number:", copyNum: "Copy number", numCopied: "Number copied",
     supT: "Support Nur", supP: "Nur is free for families. If it helps, you can buy me a teh tarik ☕", supHow: "Scan with any Malaysian banking app or e-wallet. On your phone? Long-press the QR to save it, then use \"Scan from gallery\".", supAlt: "DuitNow QR code to support Nur",
     sourceNote: "Prayer times follow JAKIM zones.",
-    learnT: "Learn", guideT: "Guides", listen: "Read & listen", listenHint: "Tap ▶ to read and listen to the surah on Quran.com (Arabic text, translation and recitation).", wudhuT: "How to do wudhu", solatT: "How to pray", steps: n => `${n} steps`, back: "← Back", nextStep: "Next →", finish: "Done ✓", stepOf: (a, b) => `Step ${a} of ${b}`, guideDoneT: "Well done!", guideDoneP: (n, g) => `${n} learnt ${g}`, rakaatT: "Number of rakaat", guideNote: "A simple guide for children following the Shafi'i school. Learn together with a parent or ustaz/ustazah.", readIt: "🔊 Read it to me", openFatihah: "▶ Listen to Al-Fatihah", allGuides: "← All guides"
+    learnT: "Learn", guideT: "Guides", listen: "Read & listen", listenHint: "Tap ▶ to read and listen to the surah on Quran.com (Arabic text, translation and recitation).", wudhuT: "How to do wudhu", solatT: "How to pray", steps: n => `${n} steps`, back: "← Back", nextStep: "Next →", finish: "Done ✓", stepOf: (a, b) => `Step ${a} of ${b}`, guideDoneT: "Well done!", guideDoneP: (n, g) => `${n} learnt ${g}`, rakaatT: "Number of rakaat", guideNote: "A simple guide for children following the Shafi'i school. Learn together with a parent or ustaz/ustazah.", readIt: "🔊 Read it to me", openFatihah: "▶ Listen to Al-Fatihah", allGuides: "← All guides", openLvl: l => `▶ Open ${l}`, viaYT: "Reading videos on YouTube", viaQC: "Read & listen on Quran.com", iqraOnline: "Iqra & Quran online", iqraOnlineP: "Iqra 1–6 open reading videos on YouTube (please watch with your child). Juz open Quran.com.", parentOnly: "🔒 Only parents can confirm", setPinHint: "Set a PIN in Family so only parents can confirm Quran reading.", confirmNgaji: "📗 Confirm reading done"
   }
 };
 let lang = "ms";
@@ -646,7 +647,9 @@ function viewToday() {
       ${ng ? `<div class="stepper"><button class="btn gray small" data-act="pg" data-d="-1" aria-label="−">−</button><b class="num">${ng}</b><button class="btn gray small" data-act="pg" data-d="1" aria-label="+">+</button><span class="hint">${t("pages")}</span></div>` : ""}</div>
     <div class="bar"><i style="width:${Math.round(prog * 100)}%"></i></div>
     <span class="hint" style="color:#C9C2FF">${lv < 6 ? t("iqraProg") : `${Math.round(prog * 100)}% ${t("toKhatam")}`}${k.ngaji.khatam ? ` · 🕋 ${t("khatamN", k.ngaji.khatam)}` : ""}</span>
-    ${ng ? `<button class="btn green" data-act="ngaji-undo">${t("ngajiDone")}</button>` : `<button class="btn violet" data-act="ngaji">${t("ngajiYes")}</button>`}
+    <a class="btn small gray" href="${levelUrl(lv)}" target="_blank" rel="noopener">${t("openLvl", lvlName(lv))} · ${lv < 6 ? "YouTube" : "Quran.com"}</a>
+    ${ng ? `<button class="btn green" data-act="ngaji-undo">${t("ngajiDone")}${state.pin ? " 🔒" : ""}</button>` : `<button class="btn violet" data-act="ngaji">${t("confirmNgaji")}${state.pin ? " 🔒" : ""}</button>`}
+    <span class="hint" style="color:#C9C2FF;text-align:center">${state.pin ? t("parentOnly") : t("setPinHint")}</span>
   </section>
   <section class="panel"><h3>${t("week")}</h3>
     <div class="week">${days.map((d, i) => { const key = dkey(d), lg = logOf(k, key); return `<div class="wd ${i === 6 ? "today" : ""}"><span>${DAYS[lang][d.getDay()]}</span><span class="dots">${PRAYERS.map(p => `<i class="${lg[p.k] ? "on" : ""}"></i>`).join("")}<i class="${lg.ngaji ? "ng" : ""}"></i></span></div>`; }).join("")}</div>
@@ -658,6 +661,10 @@ function viewGuide() {
     const done = n => k && k.guides && k.guides[n];
     return `<div class="gpick"><button class="${done("wudhu") ? "done" : ""}" data-act="guide" data-g="wudhu"><span class="e">💧</span><b>${t("wudhuT")}</b><span class="hint">${t("steps", GUIDES.wudhu.length)}${done("wudhu") ? " · ✓" : ""}</span></button>
       <button class="${done("solat") ? "done" : ""}" data-act="guide" data-g="solat"><span class="e">🧎</span><b>${t("solatT")}</b><span class="hint">${t("steps", GUIDES.solat.length)}${done("solat") ? " · ✓" : ""}</span></button></div>
+      <section class="panel"><h3>📗 ${t("iqraOnline")}</h3><p class="hint">${t("iqraOnlineP")}</p>
+        <div class="chips">${[0, 1, 2, 3, 4, 5].map(l => `<a class="chip" style="text-decoration:none;border-color:var(--violet);color:#D9D3FF" href="${levelUrl(l)}" target="_blank" rel="noopener">▶ ${lvlName(l)}</a>`).join("")}</div>
+        <div class="chips">${Array.from({ length: 30 }, (_, i) => `<a class="chip" style="text-decoration:none;border-color:var(--teal);color:#8FE3EA" href="${levelUrl(i + 6)}" target="_blank" rel="noopener">${i + 1}</a>`).join("")}</div>
+        <span class="hint">Juz 1–30 · Quran.com</span></section>
       <section class="panel"><h3>${t("rakaatT")}</h3><div class="rk">${RAKAAT.map(([p, n]) => `<div><b>${n}</b>${pName(PRAYERS.find(x => x.k === p))}</div>`).join("")}</div></section>
       <p class="note">ℹ️ ${t("guideNote")}</p>`;
   }
@@ -938,9 +945,9 @@ document.getElementById("app").addEventListener("click", e => {
       if (isFull(k, dkey())) { sfx.full(); confetti(); } else sfx.chime();
       after(k, lvB); break;
     }
-    case "ngaji": { if (!k) return; const lvB = level(k).lv; dayLog(k, dkey()).ngaji = 1; save(); const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top, 10, "📗"); sfx.chime(); after(k, lvB); break; }
+    case "ngaji": { if (!k) return; const r = b.getBoundingClientRect(); return requireParent(() => { const lvB = level(k).lv; dayLog(k, dkey()).ngaji = 1; save(); burst(r.left + r.width / 2, r.top, 10, "📗"); sfx.chime(); after(k, lvB); render(); }); }
     case "ngaji-undo": return requireParent(() => { delete dayLog(k, dkey()).ngaji; sfx.undo(); save(); render(); });
-    case "pg": { const l = dayLog(k, dkey()); l.ngaji = Math.max(1, Math.min(99, (l.ngaji || 1) + (+b.dataset.d))); save(); break; }
+    case "pg": return requireParent(() => { const l = dayLog(k, dkey()); l.ngaji = Math.max(1, Math.min(99, (l.ngaji || 1) + (+b.dataset.d))); save(); render(); });
     case "memseg": ui.memSeg = b.dataset.v; ui.guide = null; break;
     case "guide": ui.guide = { kind: b.dataset.g, i: 0 }; fx.enter = true; break;
     case "guide-exit": ui.guide = null; try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (err) {} break;
